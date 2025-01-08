@@ -2,11 +2,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
+import path from 'path'
 import Routes from './routes/Routes.js';
 
 dotenv.config();
-const app = express();    
+const app = express(); 
+
+const dirname=path.dirname("")
+const buildpath =path.join(dirname,'../frontend/dist')
 app.use(cors(
     
     // {

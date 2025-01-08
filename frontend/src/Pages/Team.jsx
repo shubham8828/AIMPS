@@ -214,20 +214,14 @@ const styles = {
     color: "#333",
     flexShrink: 0, // Prevent the icon from shrinking
   },
-  link: {
-    color: "#007bff",
-    textDecoration: "none",
-  },
+ 
   socialIcons: {
     display: "flex",
     justifyContent: "center",
     gap: "10px",
     marginTop: "10px",
   },
-  icon: {
-    fontSize: "20px",
-    color: "#333",
-  },
+ 
 };
 
 export default Team;

@@ -81,10 +81,18 @@ const AddAdmin = () => {
 
       const url = "http://localhost:4000/api/register";
 
-      const { data } = await axios.post(url, payload);
+      axios.post(url, payload)
+      .then((res)=>{
+        if(res.status===200){
+          toast.success("Admin Added Successfully ", { position: "top-center" });
 
-      localStorage.setItem("token", data.token);
-      toast.success("Admin Added Successfully ", { position: "top-center" });
+        }
+      })
+      .catch((e)=>{
+        toast.error("Admin add to Failed ", { position: "top-center" });
+
+      })
+
 
       setFormData({
         name: "",

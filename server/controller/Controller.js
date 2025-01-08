@@ -183,7 +183,7 @@ export const searchCustomer = async (req, res) => {
 
 
 export const register = async (req, res) => {
-  const { email, name, address, password, image, phone, shopname } = req.body;
+  const { email, name, address, password, image, phone, shopname ,role} = req.body;
 
   try {
     const existUser = await User.findOne({ email });
@@ -232,6 +232,7 @@ export const register = async (req, res) => {
       shopname,
       password: hashedPassword, // Store the hashed password
       image: optimizeUrl, // Store the optimized URL or use uploadResult.secure_url
+      role
     });
 
     await newUser.save();

@@ -1,13 +1,19 @@
-import Cards from "../Component/Cards.jsx";
-import Chart from "../Component/Chart.jsx";
-import LineChart from "../Component/LineChart.jsx";
-import PieChart from "../Component/PieChart.jsx";
-import Typing from "../Component/Typing.jsx";
+import React, { lazy, Suspense, useEffect, useState } from "react";
+const Cards = lazy(() => import("../Component/Cards.jsx"));
+const Chart = lazy(() => import("../Component/Chart.jsx"));
+const LineChart = lazy(() => import("../Component/LineChart.jsx"));
+const PieChart = lazy(() => import("../Component/PieChart.jsx"));
+const Typing = lazy(() => import("../Component/Typing.jsx"));
+
+// import Cards from "../Component/Cards.jsx";
+// import Chart from "../Component/Chart.jsx";
+// import LineChart from "../Component/LineChart.jsx";
+// import PieChart from "../Component/PieChart.jsx";
+// import Typing from "../Component/Typing.jsx";
 import html2canvas from "html2canvas";
-import React, { useEffect, useState } from "react";
-import Download from '../asset/download.png';
+import Download from "../asset/download.png";
 import axios from "axios";
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
 const Home = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Start with `null` instead of an empty object
 
@@ -76,7 +82,9 @@ const Home = () => {
           const croppedImgData = croppedCanvas.toDataURL("image/png");
 
           if (currentHeight > 0) pdf.addPage();
-          pdf.addImage(croppedImgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+          const margin = 10; // Adjust margin
+          pdf.addImage(croppedImgData, "PNG", margin, margin, pdfWidth - 2 * margin, pdfHeight - 2 * margin);
+
 
           // Move to the next page
           currentHeight += pageHeightInCanvas;
@@ -92,20 +100,23 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <Typing />
-      <Cards isAdmin={isAdmin} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Typing />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Cards isAdmin={isAdmin} />
+      </Suspense>
       {isAdmin && (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
           <LineChart />
           <PieChart />
-        </>
+        </Suspense>
       )}
-      <Chart/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Chart />
+      </Suspense>
 
-      <button
-        className="report-download-btn"
-        onClick={reportDownload}
-      >
+      <button className="report-download-btn" onClick={reportDownload}>
         <img src={Download} className="report-download-btn-icon" />
       </button>
     </div>

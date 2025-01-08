@@ -37,7 +37,7 @@ const Users = () => {
     try {
       const token = localStorage.getItem("token"); // Retrieve the token from localStorage
       if (token) {
-        const response = await axios.get("http://localhost:4000/api/user/role", {
+        const response = await axios.get("http://localhost:4000/api/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
