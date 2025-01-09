@@ -104,7 +104,8 @@ const AuthForm = ({ setToken }) => {
   
 
   return (
-    <div className="auth-container">
+    <div className="Container">
+      <div className="Content-Container" style={{maxWidth:'900px' ,minHeight:'50vh'}}>
       <div className="form-toggle">
         <button
           className={`toggle-btn ${isLogin ? "active" : ""}`}
@@ -316,6 +317,7 @@ const AuthForm = ({ setToken }) => {
           {isLogin ? " Login" : " Register"}
         </button>
       </form>
+      </div>
     </div>
   );
 };

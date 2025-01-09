@@ -11,30 +11,31 @@ const Section7 = lazy(() => import("../Component/Section/Section7"));
 const LandingPage = () => {
   return (
     <>
-     
-      <div className="line-chart">
       <Suspense fallback={<div>Loading...</div>}>
-          <Section />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section1 />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section2 />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section3 />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section4 />
-        </Suspense>
-        <Section5 />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section6 />
-        </Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Section7 />
-        </Suspense>
+        <Section />
+      </Suspense>
+      <div className="Container">
+        <div className="Content-Container">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section1 />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section2 />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section3 />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section4 />
+          </Suspense>
+          <Section5 />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section6 />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Section7 />
+          </Suspense>
+        </div>
       </div>
     </>
   );

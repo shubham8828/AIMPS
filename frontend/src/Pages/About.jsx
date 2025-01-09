@@ -2,7 +2,9 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="line-chart">
+    <div className="Container">
+      <div className="Content-Container">
+
       <div className="container-about">
         <h2>About AIMPS</h2>
         <p>
@@ -99,6 +101,7 @@ const About = () => {
           invoicing and payment processes. Sign up for a free trial today and
           experience the power of AIMPS for yourself!
         </p>
+      </div>
       </div>
     </div>
   );

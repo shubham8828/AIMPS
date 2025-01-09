@@ -15,7 +15,6 @@ const Team = () => {
     email: "vandanamaurya@gmail.com",
     profession: "Assistant Professor",
     experience: "5+ years",
-    
   };
 
   const teamMembers = [
@@ -38,190 +37,78 @@ const Team = () => {
   ];
 
   return (
-    <div style={styles.container}>
-      {/* Project Title */}
-      <div style={styles.projectCard}>
-        <h1 style={styles.projectTitle}>
-          <SiProbot style={styles.icon} /> AIMPS Project
-        </h1>
-      </div>
-
-      {/* Team Head */}
-
-      <div style={styles.teamSection}>
-        <div style={styles.card}>
-          <div style={styles.imagePlaceholder}>
-            <FaUserTie style={styles.placeholderIcon} />
-          </div>
-          <h3 style={styles.name}>{teamHead.name}</h3>
-          <p style={styles.title}>{teamHead.title}</p>
-          <p style={styles.profession}>
-            <FaBriefcase style={styles.icon} /> {teamHead.profession}
-          </p>
-          <p style={styles.experience}>
-            <FaBriefcase style={styles.icon} /> {teamHead.experience}
-          </p>
-          <p style={styles.email}>
-            <FaEnvelope style={styles.icon} />{" "}
-            <a href={`mailto:${teamHead.email}`} style={styles.link}>
-              {teamHead.email}
-            </a>
-          </p>
-          
+    <div className="Container">
+      <div className="Content-Container" >
+        {/* Project Title */}
+        <div className="projectCard" >
+          <h1 className="projectTitle" style={{textAlign:'center'}}>
+            <SiProbot className="icon" /> AIMPS Project
+          </h1>
         </div>
-      </div>
 
-      <div style={styles.teamSection}>
-        {teamMembers.map((member, index) => (
-          <div key={index} style={styles.card}>
-            <div style={styles.imagePlaceholder}>
-              <FaUserTie style={styles.placeholderIcon} />
-            </div>{" "}
-            <h3 style={styles.name}>{member.name}</h3>
-            <p style={styles.title}>{member.title}</p>
-            <p style={styles.profession}>
-              <FaBriefcase style={styles.icon} /> {member.profession}
-            </p>
-            <p style={styles.email}>
-              <FaEnvelope style={styles.icon} />{" "}
-              <a href={`mailto:${member.email}`} style={styles.link}>
-                {member.email}
-              </a>
-            </p>
-            <div style={styles.socialIcons}>
-              <a href={member.github} target="_blank" rel="noopener noreferrer">
-                <FaGithub style={styles.icon} />
-              </a>
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaLinkedin style={styles.icon} />
-              </a>
+        {/* Team Head */}
+        <div className="teamSection">
+          <div className="card">
+            <div className="imagePlaceholder">
+              <FaUserTie className="placeholderIcon" />
             </div>
+            <h3 className="name">{teamHead.name}</h3>
+            <p className="title">{teamHead.title}</p>
+            <p className="profession">
+              <FaBriefcase className="team-icon" /> {teamHead.profession}
+            </p>
+            <p className="experience">
+              <FaBriefcase className="team-icon" /> {teamHead.experience}
+            </p>
+            <p className="email">
+              <FaEnvelope className="team-icon" />{" "}
+              <a href={`mailto:${teamHead.email}`} className="team-link">
+                {teamHead.email}
+              </a>
+            </p>
           </div>
-        ))}
+        </div>
+
+        {/* Team Members */}
+        <div className="teamSection">
+          {teamMembers.map((member, index) => (
+            <div key={index} className="card">
+              <div className="imagePlaceholder">
+                <FaUserTie className="placeholderIcon" />
+              </div>
+              <h3 className="name">{member.name}</h3>
+              <p className="title">{member.title}</p>
+              <p className="profession">
+                <FaBriefcase className="team-icon" /> {member.profession}
+              </p>
+              <p className="email">
+                <FaEnvelope className="team-icon" />{" "}
+                <a href={`mailto:${member.email}`} className="team-link">
+                  {member.email}
+                </a>
+              </p>
+              <div className="teamsocialIcons">
+                <a
+                  href={member.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub className="team-icon" />
+                </a>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedin className="team-icon" />
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    width: "95%",
-    padding: "20px",
-    backgroundColor: "#f9f9f9",
-    fontFamily: "'Arial', sans-serif",
-    margin: "30px 0px",
-  },
-  projectCard: {
-    backgroundColor: "#4CAF50",
-    color: "#fff",
-    padding: "15px",
-    textAlign: "center",
-    borderRadius: "10px",
-    marginBottom: "20px",
-  },
-  projectTitle: {
-    fontSize: "24px",
-    margin: "0",
-  },
-  teamSection: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "30px",
-    flexWrap: "wrap",
-    marginTop: "30px",
-  },
-  sectionTitle: {
-    textAlign: "center",
-    margin: "20px 0",
-    color: "#333",
-  },
-  card: {
-    backgroundColor: "#fff",
-    padding: "15px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-    width: "350px",
-    textAlign: "center",
-  },
-  imagePlaceholder: {
-    backgroundColor: "#ddd",
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-    margin: "0 auto 10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  placeholderIcon: {
-    fontSize: "50px",
-    color: "#aaa",
-  },
-  image: {
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-    margin: "0 auto 10px",
-  },
-  name: {
-    fontSize: "18px",
-    fontWeight: "bold",
-    margin: "10px 0",
-  },
-  title: {
-    fontSize: "14px",
-    fontWeight: "600",
-    color: "#777",
-    margin: "5px 0",
-  },
-  profession: {
-    fontSize: "14px",
-    color: "#555",
-    margin: "5px 40px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start", // Align content to the left
-    gap: "8px", // Add space between icon and text
-  },
-  experience: {
-    fontSize: "14px",
-    color: "#555",
-    margin: "5px 40px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start", // Align content to the left
-    gap: "8px", // Add space between icon and text
-  },
-  email: {
-    fontSize: "14px",
-    margin: "10px 40px",
-    color: "#555",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start", // Align content to the left
-    gap: "8px", // Add space between icon and text
-  },
-  link: {
-    color: "#007bff",
-    textDecoration: "none",
-  },
-  icon: {
-    fontSize: "20px",
-    color: "#333",
-    flexShrink: 0, // Prevent the icon from shrinking
-  },
- 
-  socialIcons: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "10px",
-    marginTop: "10px",
-  },
- 
 };
 
 export default Team;

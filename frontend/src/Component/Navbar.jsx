@@ -88,7 +88,7 @@ const Navbar = ({ children, setToken }) => {
     });
 
     return (
-        <div className="container">
+        <div className="navbar">
             <div style={{ width: isOpen ? "250px" : "50px" }} className="sidebar">
                 <div className="top_section">
                     <div style={{ marginLeft: isOpen ? "0px" : "0px" }} className="bars">
