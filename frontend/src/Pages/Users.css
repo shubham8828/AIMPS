@@ -9,6 +9,8 @@
     overflow-y: hidden;
     overflow-x: auto;
     padding: 20px;
+    position: absolute;
+    top:15px;
 
   }
   

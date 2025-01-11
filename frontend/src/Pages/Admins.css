@@ -1,6 +1,6 @@
 .admin-container {
     max-width:95% ;
-    width: 90%;
+    width: 85%;
     background: #ffffff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -10,6 +10,7 @@
     margin-top: 10px;
     overflow-x: auto; /* Enable horizontal scrolling */
     overflow-y: hidden; /* Prevent vertical scroll unless necessary */
+    
   }
   
   /* Table wrapper for responsiveness */
