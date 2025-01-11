@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaPaperPlane } from "react-icons/fa";
+import './Message.css'
 
 const Message = () => {
   const [messages, setMessages] = useState([]);

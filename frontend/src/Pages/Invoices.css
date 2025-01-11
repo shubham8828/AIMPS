@@ -1,0 +1,107 @@
+.no-invoice-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 100vh;
+  }
+  
+  .no-invoice-wrapper button {
+    padding: 10px 20px;
+    background: #333;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+  }
+  
+  /* Invoice Footer */
+  .invoice-footer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f1f1f1;
+    text-align: center;
+    border-radius: 8px;
+    color: #7f8c8d;
+  }
+  
+  /* Invoice Table */
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px;
+    background: #f4f6f9;
+    border-radius: 10px;
+  }
+  
+  .invoice-table th,
+  .invoice-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #34495e;
+  }
+  
+  .invoice-table th {
+    background-color: #3498db;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .invoice-table td {
+    color: #555;
+  }
+  
+  .invoice-table tr:hover {
+    background: rgba(241, 241, 241, 0.8);
+    transform: translateX(5px);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .invoice-table tr:nth-child(even) {
+    background: rgba(245, 245, 245, 0.8);
+  }
+  
+  .invoice-table tr:nth-child(odd) {
+    background: #ffffff;
+  }
+  
+  
+.report-download-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  .report-download-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Icon Styles */
+  .report-download-btn-icon {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .report-download-btn-icon:hover {
+    color: #1e7e34;
+    transform: scale(1.1);
+  }
+  
+  

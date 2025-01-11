@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import './Search.css'
 const Search = ({ onSelectCustomer }) => {
   const [query, setQuery] = useState("");
   const [customers, setCustomers] = useState([]);

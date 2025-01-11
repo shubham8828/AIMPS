@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, Title, Tooltip, ArcElement, Legend } from "chart.js";
+import './PieChart.css'
 
 ChartJS.register(Title, Tooltip, ArcElement, Legend);
 
@@ -20,7 +21,7 @@ const PieChart = () => {
         const response = await axios.get("http://localhost:4000/api/users", {
           headers,
         });
-        
+
         const users = response.data.users;
 
         if (!users || users.length === 0) {
@@ -33,21 +34,22 @@ const PieChart = () => {
 
         // Count users by city and state (accessing address object)
         users.forEach((user) => {
-          if(user.role==='user'){
-            
-          const { city, state } = user.address || {}; // Safely access city and state
-        
-          if (city) {
-            cityCounts[city] = (cityCounts[city] || 0) + 1;
+          if (user.role === "user") {
+            const { city, state } = user.address || {}; // Safely access city and state
+
+            if (city) {
+              cityCounts[city] = (cityCounts[city] || 0) + 1;
+            }
+
+            // Clean up the state by trimming and normalizing it (e.g., remove leading/trailing spaces)
+            if (state) {
+              const normalizedState = state.trim(); // Remove any extra spaces
+              stateCounts[normalizedState] =
+                (stateCounts[normalizedState] || 0) + 1;
+            }
           }
-        
-          // Clean up the state by trimming and normalizing it (e.g., remove leading/trailing spaces)
-          if (state) {
-            const normalizedState = state.trim(); // Remove any extra spaces
-            stateCounts[normalizedState] = (stateCounts[normalizedState] || 0) + 1;
-          }
-      }});
-        
+        });
+
         // Prepare data for Pie chart (City)
         setCityData({
           labels: Object.keys(cityCounts),
@@ -55,8 +57,12 @@ const PieChart = () => {
             {
               label: "Users by City",
               data: Object.values(cityCounts),
-              backgroundColor: generateRandomColors(Object.keys(cityCounts).length),
-              hoverBackgroundColor: generateRandomColors(Object.keys(cityCounts).length),
+              backgroundColor: generateRandomColors(
+                Object.keys(cityCounts).length
+              ),
+              hoverBackgroundColor: generateRandomColors(
+                Object.keys(cityCounts).length
+              ),
             },
           ],
         });
@@ -68,8 +74,12 @@ const PieChart = () => {
             {
               label: "Users by State",
               data: Object.values(stateCounts),
-              backgroundColor: generateRandomColors(Object.keys(stateCounts).length),
-              hoverBackgroundColor: generateRandomColors(Object.keys(stateCounts).length),
+              backgroundColor: generateRandomColors(
+                Object.keys(stateCounts).length
+              ),
+              hoverBackgroundColor: generateRandomColors(
+                Object.keys(stateCounts).length
+              ),
             },
           ],
         });
@@ -103,20 +113,17 @@ const PieChart = () => {
   }
 
   return (
-    <div className="line-chart">
-    <div className="line-chart1">
-
-      <h2 style={{ textAlign: "center" }}>Users by City and State</h2>
-      <div style={{ display: "flex", justifyContent: "space-around" ,width:'90%',height:'70vh', margin:'auto'}}>
-        <div style={{ width: "40%", height:'400px'  }}>
+    <div className="pie-chart-container">
+      <h2 className="chart-title">Users by City and State</h2>
+      <div className="chart-wrapper">
+        <div className="chart-box">
           <h3>Users by City</h3>
-          <Pie data={cityData} height={350} />
+          <Pie data={cityData} />
         </div>
-        <div style={{ width: "40%",height:'400px' }}>
+        <div className="chart-box">
           <h3>Users by State</h3>
-          <Pie data={stateData} height={350} />
+          <Pie data={stateData} />
         </div>
-      </div>
       </div>
     </div>
   );

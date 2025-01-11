@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import payment from '../../asset/payment.avif'
+import './Section.css'
+
 const Section6 = () => {
     const [showAccordion, setShowAccordion] = useState(false);
 

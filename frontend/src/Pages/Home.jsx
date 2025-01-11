@@ -4,12 +4,7 @@ const Chart = lazy(() => import("../Component/Chart.jsx"));
 const LineChart = lazy(() => import("../Component/LineChart.jsx"));
 const PieChart = lazy(() => import("../Component/PieChart.jsx"));
 const Typing = lazy(() => import("../Component/Typing.jsx"));
-
-// import Cards from "../Component/Cards.jsx";
-// import Chart from "../Component/Chart.jsx";
-// import LineChart from "../Component/LineChart.jsx";
-// import PieChart from "../Component/PieChart.jsx";
-// import Typing from "../Component/Typing.jsx";
+import "./Home.css";
 import html2canvas from "html2canvas";
 import Download from "../asset/download.png";
 import axios from "axios";
@@ -37,7 +32,7 @@ const Home = () => {
   }, []);
 
   const reportDownload = () => {
-    const element = document.querySelector(".home-container");
+    const element = document.querySelector(".home");
 
     if (element) {
       html2canvas(element, {
@@ -83,8 +78,14 @@ const Home = () => {
 
           if (currentHeight > 0) pdf.addPage();
           const margin = 10; // Adjust margin
-          pdf.addImage(croppedImgData, "PNG", margin, margin, pdfWidth - 2 * margin, pdfHeight - 2 * margin);
-
+          pdf.addImage(
+            croppedImgData,
+            "PNG",
+            margin,
+            margin,
+            pdfWidth - 2 * margin,
+            pdfHeight - 2 * margin
+          );
 
           // Move to the next page
           currentHeight += pageHeightInCanvas;
@@ -99,27 +100,31 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
+    <>
       <Suspense fallback={<div>Loading...</div>}>
         <Typing />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Cards isAdmin={isAdmin} />
-      </Suspense>
-      {isAdmin && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LineChart />
-          <PieChart />
-        </Suspense>
-      )}
-      <Suspense fallback={<div>Loading...</div>}>
-        <Chart />
-      </Suspense>
+      <div className="main-container">
+        <div className="home-container">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Cards isAdmin={isAdmin} />
+          </Suspense>
+          {isAdmin && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <LineChart />
+              <PieChart />
+            </Suspense>
+          )}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Chart />
+          </Suspense>
+        </div>
 
-      <button className="report-download-btn" onClick={reportDownload}>
-        <img src={Download} className="report-download-btn-icon" />
-      </button>
-    </div>
+        <button className="report-download-btn" onClick={reportDownload}>
+          <img src={Download} className="report-download-btn-icon" />
+        </button>
+      </div>
+    </>
   );
 };
 

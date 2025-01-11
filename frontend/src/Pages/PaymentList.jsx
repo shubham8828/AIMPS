@@ -5,7 +5,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import Download from "../asset/download.png";
-
+import './PaymentList.css'
 const PaymentList = () => {
   const [paymentData, setPaymentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -120,7 +120,9 @@ const PaymentList = () => {
  
 
   return (
-    <div className="line-chart" style={{height:'95vh'}}>
+    <div className="main-container">
+    <div className="payment-list-container">
+
       <div className="payment-top">
         <h1>Payment Details</h1>
         <div className="filters">
@@ -140,9 +142,9 @@ const PaymentList = () => {
             <option value="Pending">Pending</option>
             <option value="Successful">Successful</option>
           </select>
-          <button className="report-download-btn" onClick={downloadTableData}>
+          {/* <button className="report-download-btn" onClick={downloadTableData}>
             <img src={Download} className="report-download-btn-icon" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -225,6 +227,7 @@ const PaymentList = () => {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 };

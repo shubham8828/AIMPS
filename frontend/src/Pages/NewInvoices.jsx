@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import Search from "../Component/Search.jsx";
 import Spinner from "../Component/Spinner.jsx";
+import './NewInvoices.css'
 
 const NewInvoices = () => {
   const [to, setTo] = useState("");

@@ -1,11 +1,9 @@
 import React from "react";
-
+import "./About.css";
 const About = () => {
   return (
-    <div className="Container">
-      <div className="Content-Container">
-
-      <div className="container-about">
+    <div className="main-container">
+      <div className="about-container">
         <h2>About AIMPS</h2>
         <p>
           Welcome to AIMPS (Advanced Invoice Management & Payment Solutions),
@@ -15,7 +13,7 @@ const About = () => {
           effectively eliminating the complexities of traditional methods.
         </p>
       </div>
-      <div className="container-about">
+      <div className="about-container">
         <h2>What We Offer</h2>
         <ul>
           <li>
@@ -42,7 +40,7 @@ const About = () => {
           </li>
         </ul>
       </div>
-      <div className="container-about">
+      <div className="about-container">
         <h2>Our Mission</h2>
         <p>
           At AIMPS, our mission is to make invoice management smarter and
@@ -53,7 +51,7 @@ const About = () => {
           way for their growth.
         </p>
       </div>
-      <div className="container-about">
+      <div className="about-container">
         <h2>Why Choose AIMPS?</h2>
         <p>
           AIMPS stands out with its user-friendly interface, powerful automation
@@ -64,7 +62,7 @@ const About = () => {
           updates to enhance your experience.
         </p>
       </div>
-      <div className="container-about">
+      <div className="about-container">
         <h2>Our Team</h2>
         <p>
           AIMPS is developed by a dedicated team of passionate individuals,
@@ -77,7 +75,7 @@ const About = () => {
         </p>
       </div>
 
-      <div className="container-about">
+      <div className="about-container">
         <h2>Customer Testimonials</h2>
         <p>
           Our users have expressed their satisfaction with AIMPS, highlighting
@@ -94,14 +92,13 @@ const About = () => {
           <em>Sneha Patel, Freelancer</em>
         </blockquote>
       </div>
-      <div className="container-about">
+      <div className="about-container">
         <h2>Get Started Today</h2>
         <p>
           Join the growing community of satisfied users and take control of your
           invoicing and payment processes. Sign up for a free trial today and
           experience the power of AIMPS for yourself!
         </p>
-      </div>
       </div>
     </div>
   );

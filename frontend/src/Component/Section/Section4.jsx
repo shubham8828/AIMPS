@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import GST  from '../../asset/GST.jpg';
+import './Section.css'
+
 const Section4 = () => {
     const [showAccordion, setShowAccordion] = useState(false);
 

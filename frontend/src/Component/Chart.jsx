@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Line } from "react-chartjs-2";
-import { Pie } from "react-chartjs-2";
+import { Line,Pie } from "react-chartjs-2";
 import {
   BarChart,
   Bar,
@@ -23,6 +22,8 @@ import {
   Tooltip as ChartJSTooltip,
   Legend as ChartJSLegend,
 } from "chart.js";
+
+import './Chart.css'
 
 // Register Chart.js components
 ChartJS.register(
@@ -139,7 +140,7 @@ const LineChart = ({ data }) => {
   };
 
   return (
-    <div className="line-chart1">
+    <div className="Container" style={{background:'white', marginTop:'15px'}}>
       <h2 style={{ textAlign: "center" }}>Monthly Invoice and Price Summary</h2>
       <Line data={chartConfig} options={options} />
     </div>
@@ -149,7 +150,7 @@ const LineChart = ({ data }) => {
 // Grouped Bar Chart Component
 const GroupedBarChart = ({ chartData }) => {
   return (
-    <div className="bar-chart">
+    <div className="Container" style={{background:'white', marginTop:'15px'}}>
       <h3 style={{ textAlign: "center" }}>
         Month-Wise Invoice Count and Total Price
       </h3>
@@ -226,20 +227,21 @@ const PieChart = ({ data }) => {
   };
 
   return (
-    <div className="pie-chart-container">
-      <h2 style={{ textAlign: "center" }}>Monthly Invoice Analysis</h2>
-      <div className="charts-wrapper">
-        <div className="chart-item">
+    <div className="chart-container ">
+      <h2 style={{ textAlign: 'center' }}>Monthly Invoice Analysis</h2>
+      <div className="chart-wrapper">
+        <div className="chart-box">
           <h3>Total Price Distribution (Month-wise)</h3>
           <Pie data={totalPriceChartData} options={options} />
         </div>
-        <div className="chart-item">
+        <div className="chart-box">
           <h3>Invoice Count Distribution (Month-wise)</h3>
           <Pie data={invoiceCountChartData} options={options} />
         </div>
       </div>
     </div>
   );
+  
 };
 
 // Parent Component
@@ -267,7 +269,7 @@ const Charts = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="line-chart">
+    <div className="Container" style={{background:'white', marginTop:'15px'}}>
         <LineChart data={data} />
         <GroupedBarChart chartData={data} />
         <PieChart data={data} />

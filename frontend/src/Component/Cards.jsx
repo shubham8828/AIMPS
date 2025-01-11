@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './Cards.css'
 
-// Utility function to format numbers
 const formatNumber = (num) => {
   if (num >= 1_000_000) {
     return (num / 1_000_000).toFixed(1) + "M";
@@ -73,14 +73,8 @@ const Cards = ({ isAdmin }) => {
   }, []);
 
   return (
-    <div className="line-chart">
-      <div
-        className="home-first-row"
-          style={{
-            paddingTop: !isAdmin ? "40px" : "0",
-            paddingBottom: !isAdmin ? "40px" : "0",
-          }}
-        >
+    
+      <div className="card-container" >
         <div className="home-box">
           <h1>Rs.{formatNumber(totalAmount)}</h1>
           <p>Overall Total</p>
@@ -110,7 +104,6 @@ const Cards = ({ isAdmin }) => {
           </>
         )}
       </div>
-    </div>
   );
 };
 

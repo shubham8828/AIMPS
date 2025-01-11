@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import analysis  from '../../asset/analysis.jpeg';
 
+import './Section.css'
+
 const Section7 = () => {
     const [showAccordion, setShowAccordion] = useState(false);
 

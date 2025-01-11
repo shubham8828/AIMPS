@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import ImageCompressor from 'image-compressor.js'; // For image compression
 import toast from 'react-hot-toast';
-
+import './Profile.css'
 const Profile = () => {
   const [user, setUser] = useState(null); // Store user data
   const [formData, setFormData] = useState({}); // Store form data

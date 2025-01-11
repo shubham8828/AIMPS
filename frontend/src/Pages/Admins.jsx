@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import toast from "react-hot-toast";
-
+import "./Admins.css";
 const Admins = () => {
   const [Users, setUsers] = useState([]); // Initialize with an empty array
   const [currUser, setCurrUser] = useState(null); // Current logged-in user (initialize with null)
@@ -36,7 +36,7 @@ const Admins = () => {
   const handleEdit = (admin) => {
     if (!currUser || currUser.role !== "root") {
       toast.error("Contact to Root Admin", { position: "top-center" });
-      navigate('/message')
+      navigate("/message");
 
       return;
     }
@@ -54,18 +54,17 @@ const Admins = () => {
   // Delete functionality
   const handleDelete = async (admin) => {
     if (!currUser || currUser.role !== "root") {
-
-      if(admin.role==='root'){
-        toast.error("You Can't Root Admin")
+      if (admin.role === "root") {
+        toast.error("You Can't Root Admin");
         return;
       }
 
       toast.error("Contact to Root Admin", { position: "top-center" });
-      navigate('/message')
+      navigate("/message");
       return;
     }
-    if(admin.role==='root' && currUser || currUser.role === "root"){
-      toast.error("You Can't Detele Your Self ")
+    if ((admin.role === "root" && currUser) || currUser.role === "root") {
+      toast.error("You Can't Detele Your Self ");
       return;
     }
 
@@ -76,79 +75,86 @@ const Admins = () => {
   const handleAddAdmin = () => {
     if (!currUser || currUser.role !== "root") {
       toast.error("Contact to Root Admin", { position: "top-center" });
-      navigate('/message')
+      navigate("/message");
       return;
     }
     navigate("/admin/add"); // Redirect to /admin/add
   };
 
   return (
-    <div className="line-chart" style={{height:'95vh',width:'93vw'}}>
-      <h2 style={{textAlign:'center'}}>Admins</h2>
-      <table border="1" className="admins-table">
-        <thead>
-          <tr>
-            <th>Sr.No</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Access</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Users.length > 0 ? (
-            Users.filter(
-              (user) => user.role === "root" || user.role === "admin"
-            ).map((admin, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{admin.email}</td>
-                <td>{admin.name}</td>
-                <td>{admin.phone}</td>
-                <td>
-                  {admin.role === "root" ? "Full Access" : "Users Accessss"}
-                </td>
-                <td>{admin.role}</td>
-                <td>
-                  <button onClick={() => handleEdit(admin)} style={{width:'10px'}}>
-                    <FaEdit />
-                  </button>{" "}
-                  <button onClick={() => handleDelete(admin)} style={{width:'10px'}}>
-                    <FaTrashAlt />
-                  </button>
-                </td>
+    <div className="main-container">
+      <div className="admin-container">
+        <h2 style={{ textAlign: "center" }}>Admins</h2>
+        <div className="admin-table-wrapper">
+          <table border="1" className="admins-table">
+            <thead>
+              <tr>
+                <th>Sr.No</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Access</th>
+                <th>Role</th>
+                <th>Action</th>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7" style={{ textAlign: "center" }}>
-                No admins found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {Users.length > 0 ? (
+                Users.filter(
+                  (user) => user.role === "root" || user.role === "admin"
+                ).map((admin, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{admin.email}</td>
+                    <td>{admin.name}</td>
+                    <td>{admin.phone}</td>
+                    <td>
+                      {admin.role === "root" ? "Full Access" : "Users Accessss"}
+                    </td>
+                    <td>{admin.role}</td>
+                    <td>
+                      <button onClick={() => handleEdit(admin)}>
+                        <FaEdit />
+                      </button>
 
-      {/* Ensure currUser is loaded and has the correct role before rendering the button */}
-      {currUser && currUser.role === "root" && (
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "flex-start",
-            width: "200px",
-          }}
-        >
-          <button
-            onClick={handleAddAdmin}
-            style={{ padding: "10px 20px", fontSize: "16px" }}
-          >
-            Add Admin
-          </button>
+                      <button
+                        onClick={() => handleDelete(admin)}
+                        style={{ background: "red" }}
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" style={{ textAlign: "center" }}>
+                    No admins found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
-      )}
+        {/* Ensure currUser is loaded and has the correct role before rendering the button */}
+        {currUser && currUser.role === "root" && (
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "flex-start",
+              width: "200px",
+            }}
+          >
+            <button
+              onClick={handleAddAdmin}
+              style={{ padding: "10px 20px", fontSize: "16px" }}
+            >
+              Add Admin
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import invoiceImg from "../../asset/invoice.png";
+import './Section.css'
+
 const InvoiceSection = () => {
   const [showAccordion, setShowAccordion] = useState(false);
 

@@ -1,12 +1,12 @@
-import { TypeAnimation } from "react-type-animation";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { TypeAnimation } from "react-type-animation";
 import { FaSun, FaMoon, FaCloudSun, FaCloudMoon } from "react-icons/fa";
-import Hero from '../asset/Hero.png'
+import Hero from "../asset/Hero.png";
+import "./Typing.css";
 const Typing = () => {
   const [user, setUser] = useState(null);
   const [greeting, setGreeting] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,9 +18,6 @@ const Typing = () => {
       .get("http://localhost:4000/api/user", { headers })
       .then((response) => {
         const { user } = response.data;
-        if (user.role === "root" || user.role === "admin") {
-          setIsAdmin(true);
-        }
         setUser(user);
       })
       .catch((error) => {
@@ -41,10 +38,7 @@ const Typing = () => {
 
   const generateMessages = (user) => {
     if (!user) return [];
-    return [
-      `${greeting} ${user.name}!`,
-      `Welcome back, ${user.email}`,
-     ];
+    return [`${greeting} ${user.name}!`, `Welcome back, ${user.name}`];
   };
 
   const messages = generateMessages(user);
@@ -52,13 +46,29 @@ const Typing = () => {
   const getBackgroundAndIcon = () => {
     switch (greeting) {
       case "Good Morning":
-        return { background: "#FFD700", icon: <FaSun style={{ fontSize: "6em", marginBottom: "20px" }} /> };
+        return {
+          background: "#FFD700",
+          icon: <FaSun style={{ fontSize: "6em", marginBottom: "20px" }} />,
+        };
       case "Good Afternoon":
-        return { background: "#FFB347", icon: <FaCloudSun style={{ fontSize: "6em", marginBottom: "20px" }} /> };
+        return {
+          background: "#FFB347",
+          icon: (
+            <FaCloudSun style={{ fontSize: "6em", marginBottom: "20px" }} />
+          ),
+        };
       case "Good Evening":
-        return { background: "#FF6347", icon: <FaCloudMoon style={{ fontSize: "6em", marginBottom: "20px" }} /> };
+        return {
+          background: "#FF6347",
+          icon: (
+            <FaCloudMoon style={{ fontSize: "6em", marginBottom: "20px" }} />
+          ),
+        };
       case "Good Night":
-        return { background: "#2F4F4F", icon: <FaMoon style={{ fontSize: "6em", marginBottom: "20px" }} /> };
+        return {
+          background: "#2F4F4F",
+          icon: <FaMoon style={{ fontSize: "6em", marginBottom: "20px" }} />,
+        };
       default:
         return { background: "#FFFFFF", icon: null };
     }
@@ -67,50 +77,26 @@ const Typing = () => {
   const { background, icon } = getBackgroundAndIcon();
 
   return (
-    <div className="line-chart1">
-      <div
-        className="welcome-user-container"
-        style={{
-          backgroundColor: background,
-          color: "#FFFFFF",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          height: !isAdmin ? "100vh" : "80vh",
-        }}
-      >
-        <div className="welcome-left" style={{width:'50%'}}>
-          <img src={Hero} alt="" height={400} />
+      <div className="welcome-container" style={{ backgroundColor: background }}>
+        <div className="welcome-left">
+          <img src={Hero} alt="Hero" />
         </div>
-        <div className="welcome-right" 
-          style={{
-          display:'flex', 
-          flexDirection:'column', 
-          width:'50%',
-          alignItems: "center",
-          justifyContent: "center"
-          }}>
-        {user ? (
-          <>
-            {icon}
-            <TypeAnimation
-              sequence={[
-                ...messages,
-                2000,
-              ]}
-              wrapper="h1"
-              speed={50}
-              style={{ fontSize: "2em", display: "inline-block", marginTop: "20px" }}
-              repeat={Infinity}
-            />
-          </>
-        ) : (
-          <h1>Loading...</h1>
-        )}
+        <div className="welcome-right">
+          {user ? (
+            <>
+              {icon}
+              <TypeAnimation
+                sequence={[...messages, 2000]}
+                wrapper="h1"
+                speed={50}
+                repeat={Infinity}
+              />
+            </>
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </div>
       </div>
-    </div>
   );
 };
 

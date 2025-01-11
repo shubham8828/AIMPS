@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import invoiceImage from "../../asset/share_invoices_on_whatsapp_1.webp";
+import './Section.css'
+
 const ShareInvoiceSection = () => {
   const [showAccordion, setShowAccordion] = useState(false);
 

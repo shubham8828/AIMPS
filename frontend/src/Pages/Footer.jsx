@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdEmail } from "react-icons/md";
-
+import './Footer.css'
 const Footer = () => {
     return (
         <footer className="footer">

@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Component/Spinner.jsx";
 
+import './AuthForm.css'
 const AddAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

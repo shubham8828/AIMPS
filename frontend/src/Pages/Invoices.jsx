@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { FaArrowLeft, FaArrowRight, FaTrashAlt, FaEye } from "react-icons/fa";
 import Download from "../asset/download.png";
 import * as XLSX from "xlsx";
-
+import './Invoices.css'
 const Invoices = () => {
   const [allInvoices, setAllInvoices] = useState([]); // Holds all invoices
   const [filteredInvoices, setFilteredInvoices] = useState([]); // Holds filtered invoices
@@ -80,20 +80,6 @@ const Invoices = () => {
     setFilteredInvoices(results);
     setCurrentPage(1); // Reset to first page when search term changes
 
-    const handleScroll = () => {
-      const button = document.querySelector(".report-download-btn");
-      if (window.scrollY > window.innerHeight) {
-        button.style.display = "flex"; // Show the button
-      } else {
-        button.style.display = "none"; // Hide the button
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, [searchTerm, allInvoices]);
 
   // Pagination: Get current page invoices
@@ -161,7 +147,7 @@ const Invoices = () => {
   };
 
   return (
-    <div className="line-chart" style={{height:'95vh',width:'93vw'}}>
+    <div className="Container" >
       {allInvoices.length === 0 ? (
         // If no invoices are available
         <div className="no-invoice-wrapper">

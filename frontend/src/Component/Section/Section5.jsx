@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import management from '../../asset/management.jpg'
+import './Section.css'
 
 const Section5 = () => {
     const [showAccordion, setShowAccordion] = useState(false);

@@ -4,7 +4,7 @@ import ImageCompressor from 'image-compressor.js'; // For image compression
 import toast from 'react-hot-toast';
 import { ImSpinner3 } from "react-icons/im";
 import { useLocation } from 'react-router-dom';
-
+import './Profile.css'
 const Profile = () => {
   const location=useLocation();
 

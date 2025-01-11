@@ -4,7 +4,7 @@ import axios from "axios";
 import html2canvas from "html2canvas"; // Import html2canvas
 import jsPDF from "jspdf"; // Import jsPDF for PDF generation
 import toast from "react-hot-toast";
-
+import './InvoiceDetails.css'
 const InvoiceDetails = () => {
   const location = useLocation();
   const [data, setData] = useState(location.state);

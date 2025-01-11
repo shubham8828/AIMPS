@@ -15,6 +15,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import './Navbar.css'
 
 const Navbar = ({ children, setToken }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -89,7 +90,7 @@ const Navbar = ({ children, setToken }) => {
 
     return (
         <div className="navbar">
-            <div style={{ width: isOpen ? "250px" : "50px" }} className="sidebar">
+            <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
                 <div className="top_section">
                     <div style={{ marginLeft: isOpen ? "0px" : "0px" }} className="bars">
                         <FaBars onClick={toggle} />

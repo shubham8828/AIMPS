@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PaymentSpinner from "../Component/Spinner.jsx";
 import axios from "axios";
-
+import './Payment.css'
 const generateRandomPaymentId = () => {
   const randomPart = Math.floor(Math.random() * 100000000);
   return `PAY${randomPart}`;

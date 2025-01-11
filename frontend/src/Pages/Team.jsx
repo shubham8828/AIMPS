@@ -8,6 +8,9 @@ import {
 } from "react-icons/fa";
 import { SiProbot } from "react-icons/si";
 
+import './Team.css'
+
+
 const Team = () => {
   const teamHead = {
     title: "Project Mentor",
@@ -37,8 +40,8 @@ const Team = () => {
   ];
 
   return (
-    <div className="Container">
-      <div className="Content-Container" >
+    <div className="main-container">
+      <div className="team-container" >
         {/* Project Title */}
         <div className="projectCard" >
           <h1 className="projectTitle" style={{textAlign:'center'}}>

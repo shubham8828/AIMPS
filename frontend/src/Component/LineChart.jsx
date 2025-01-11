@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
+import './LineChart.css'
 // Register necessary Chart.js components
 ChartJS.register(
   CategoryScale,
@@ -98,11 +98,9 @@ const LineChart = () => {
   };
 
   return (
-    <div className='line-chart'>
-      <div className="line-chart1">
+    <div className='line-chart-container' >
       <h2 style={{ textAlign: 'center' }}>Month-Wise User Registrations</h2>
       <Line data={monthData} options={options} />
-    </div>
     </div>
   );
 };
