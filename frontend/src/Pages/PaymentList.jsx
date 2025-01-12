@@ -5,7 +5,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import Download from "../asset/download.png";
-import './PaymentList.css'
+import "./PaymentList.css";
 const PaymentList = () => {
   const [paymentData, setPaymentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -117,117 +117,132 @@ const PaymentList = () => {
     XLSX.writeFile(wb, "Payment_Data.xlsx");
   };
 
- 
-
   return (
     <div className="main-container">
-    <div className="payment-list-container">
-
-      <div className="payment-search-bar-group">
-        <h1 className="payment-header">Payment Details</h1>
-        <div className="payment-filters">
-          <input
-            type="text"
-            placeholder="Search by Customer Name, Invoice ID, Phone, or Payment Method"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="payment-search-bar"
-          />
-          <select
-            className="payment-status-filter"
-            value={paymentStatus}
-            onChange={(e) => setPaymentStatus(e.target.value)}
-          >
-            <option value="">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Successful">Successful</option>
-          </select>
-          {/* <button className="report-download-btn" onClick={downloadTableData}>
+      <div className="payment-list-container">
+        <div className="payment-search-bar-group">
+          <h1 className="payment-header">Payment Details</h1>
+          <div className="payment-filters">
+            <input
+              type="text"
+              placeholder="Search by Customer Name, Invoice ID, Phone, or Payment Method"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="payment-search-bar"
+            />
+            <select
+              className="payment-status-filter"
+              value={paymentStatus}
+              onChange={(e) => setPaymentStatus(e.target.value)}
+            >
+              <option value="">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Successful">Successful</option>
+            </select>
+            {/* <button className="report-download-btn" onClick={downloadTableData}>
             <img src={Download} className="report-download-btn-icon" />
           </button> */}
+          </div>
         </div>
-      </div>
 
-      <div className="payment-table-container">
-        <table className="payment-table">
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              <th>Invoice ID</th>
-              <th>Customer Name</th>
-              <th>Phone</th>
-              <th>Amount</th>
-              <th>Currency</th>
-              <th>Payment Status</th>
-              <th>Payment Date</th>
-              <th>Payment Method</th>
-              <th>Payment ID</th>
-              <th>Card Details</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentPayments.map((transaction, index) => (
-              <tr key={index}>
-                <td>{startIndex + index + 1}</td>
-                <td>{transaction.invoiceId}</td>
-                <td style={{textTransform:'capitalize'}}>{transaction.customerName}</td>
-                <td>{transaction.customerPhone}</td>
-                <td>{transaction.amount}</td>
-                <td>{transaction.currency}</td>
-                <td >{transaction.paymentStatus}</td>
-                <td>
-                  {transaction.paymentDate
-                    ? new Date(transaction.paymentDate).toLocaleDateString()
-                    : "N/A"}
-                </td>
-                <td>{transaction.paymentMethod}</td>
-                <td>{transaction.paymentId}</td>
-                <td style={{minWidth:'150px'}}>
-                  {transaction.paymentMethod === "Card" &&
-                  transaction.cardDetails
-                    ? `**** **** **** ${transaction.cardDetails.cardNumber.slice(
-                        -4
-                      )}`
-                    : "N/A"}
-                </td>
-                <td>
-                  <button
-                    onClick={() =>
-                      handleAction(
-                        transaction.paymentStatus,
-                        transaction.invoiceId
-                      )
-                    }
-                  >
-                    {transaction.paymentStatus === "Pending" ? "Pay" : "Done"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <div className="payment-table-container">
+          {filteredData.length === 0 ? (
+            <div className="no-payment-data"> <p>No Payment Data Available</p></div>
+          ) : (
+            <table className="payment-table">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Invoice ID</th>
+                  <th>Customer Name</th>
+                  <th>Phone</th>
+                  <th>Amount</th>
+                  <th>Currency</th>
+                  <th>Payment Status</th>
+                  <th>Payment Date</th>
+                  <th>Payment Method</th>
+                  <th>Payment ID</th>
+                  <th>Card Details</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentPayments.map((transaction, index) => (
+                  <tr key={index}>
+                    <td>{startIndex + index + 1}</td>
+                    <td>{transaction.invoiceId}</td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {transaction.customerName}
+                    </td>
+                    <td>{transaction.customerPhone}</td>
+                    <td>{transaction.amount}</td>
+                    <td>{transaction.currency}</td>
+                    <td>{transaction.paymentStatus}</td>
+                    <td>
+                      {transaction.paymentStatus === "Pending"
+                        ? "N/A"
+                        : transaction.paymentDate
+                        ? new Date(transaction.paymentDate).toLocaleDateString()
+                        : "N/A"}
+                    </td>
 
-      {filteredData.length > itemsPerPage && (
-        <div className="payment-more">
-          <button
-            className="payment-previous-btn"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-          >
-            <FaArrowLeft />
-          </button>
-          <button
-            className="payment-next-btn"
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-          >
-            <FaArrowRight />
-          </button>
+                    <td>{transaction.paymentMethod}</td>
+                    <td>{transaction.paymentId}</td>
+                    <td style={{ minWidth: "150px" }}>
+                      {transaction.paymentMethod === "Card" &&
+                      transaction.cardDetails
+                        ? `**** **** **** ${transaction.cardDetails.cardNumber.slice(
+                            -4
+                          )}`
+                        : "N/A"}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() =>
+                          handleAction(
+                            transaction.paymentStatus,
+                            transaction.invoiceId
+                          )
+                        }
+                        style={{
+                          background:
+                            transaction.paymentStatus === "Pending"
+                              ? "red"
+                              : "green",
+                          color: "white",
+                        }}
+                      >
+                        {transaction.paymentStatus === "Pending"
+                          ? "Pay"
+                          : "Done"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
-      )}
-    </div>
+
+        {filteredData.length > itemsPerPage && (
+          <div className="payment-more">
+            <button
+              className="payment-previous-btn"
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+            >
+              <FaArrowLeft />
+            </button>
+            <button
+              className="payment-next-btn"
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+            >
+              <FaArrowRight />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

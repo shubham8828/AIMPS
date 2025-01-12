@@ -109,6 +109,16 @@
   gap: 10px;
 }
 
+
+.no-payment-data{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
 @media (max-width: 768px) {
   .payment-search-bar-group{
     flex-direction: column;

@@ -133,6 +133,7 @@ const Profile = () => {
               onChange={handleChange}
               required
               style={{ textTransform: "lowercase" }}
+              readOnly
             />
           </div>
           <div className="form-group">
@@ -148,7 +149,8 @@ const Profile = () => {
                   handleChange(e);
                 }
               }}
-              maxLength="10"
+              maxLength={10}
+              minLength={10}
               required
               placeholder="Enter 10-digit phone number"
             />

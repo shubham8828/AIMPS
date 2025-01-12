@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaPaperPlane } from "react-icons/fa";
-import './Message.css'
+import "./Message.css";
 
 const Message = () => {
   const [messages, setMessages] = useState([]);
@@ -102,27 +102,26 @@ const Message = () => {
   };
 
   return (
-      <div className="chat-container">
+    <div className="chat-container">
+      <div className="user-list-container">
+        <h3>AIMS</h3>
+
+        {/* Toggle Buttons */}
+        <div className="btn-group">
+          <button
+            className={`toggle-btn ${showAdmin ? "act" : ""}`}
+            onClick={() => setShowAdmin(true)}
+          >
+            Admins
+          </button>
+          <button
+            className={`toggle-btn ${!showAdmin ? "act" : ""}`}
+            onClick={() => setShowAdmin(false)}
+          >
+            Users
+          </button>
+        </div>
         <div className="user-list">
-          <h3>AIMS</h3>
-
-          {/* Toggle Buttons */}
-          <div className="btn-group">
-            <button
-              className={`toggle-btn ${showAdmin ? "act" : ""}`}
-              onClick={() => setShowAdmin(true)}
-            >
-              Admins
-            </button>
-            <button
-              className={`toggle-btn ${!showAdmin ? "act" : ""}`}
-              onClick={() => setShowAdmin(false)}
-            >
-              Users
-            </button>
-          </div>
-
-          {/* Conditional Rendering */}
           <ul>
             {users
               .filter(
@@ -146,65 +145,66 @@ const Message = () => {
               ))}
           </ul>
         </div>
-
-        <div className="chat-window">
-          {selectedUser ? (
-            <div className="chat-content">
-              <div className="chat-header">
-                <img
-                  src={users.find((user) => user._id === selectedUser)?.image}
-                  alt=""
-                />
-                <h3>
-                  {users.find((user) => user._id === selectedUser)?.name}(
-                  {users.find((user) => user._id === selectedUser)?.role})
-                </h3>
-              </div>
-              <div className="messages">
-                {messages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={
-                      msg.sender === currUser.email ? "sent" : "received"
-                    }
-                  >
-                    <p>{msg.msg}</p>
-                    <span className="message-time">
-                      {new Date(msg.createdAt).toLocaleTimeString("en-US", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="message-input">
-                <input
-                  type="text"
-                  placeholder="Type a message..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button onClick={handleSendMessage}>
-                  <FaPaperPlane />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <p
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "35%",
-              }}
-            >
-              Select a user to start chatting
-            </p>
-          )}
-        </div>
       </div>
+
+      <div className="chat-window">
+        {selectedUser ? (
+          <div className="chat-content">
+            <div className="chat-header">
+              <img
+                src={users.find((user) => user._id === selectedUser)?.image}
+                alt=""
+              />
+              <h3>
+                {users.find((user) => user._id === selectedUser)?.name}(
+                {users.find((user) => user._id === selectedUser)?.role})
+              </h3>
+            </div>
+            <div className="messages">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={
+                    msg.sender === currUser.email ? "sent" : "received"
+                  }
+                >
+                  <p>{msg.msg}</p>
+                  <span className="message-time">
+                    {new Date(msg.createdAt).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="message-input">
+              <input
+                type="text"
+                placeholder="Type a message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <button onClick={handleSendMessage}>
+                <FaPaperPlane />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "35%",
+            }}
+          >
+            Select a user to start chatting
+          </p>
+        )}
+      </div>
+    </div>
   );
 };
 

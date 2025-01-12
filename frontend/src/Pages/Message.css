@@ -6,31 +6,32 @@
   padding: 20px;
 }
 
-.user-list {
+.user-list-container {
   width: 250px;
   background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
 }
 
-.user-list::-webkit-scrollbar {
-  display: none;
-}
 
-.user-list h3 {
+
+.user-list-container h3 {
   text-align: center;
   margin-bottom: 15px;
   font-size: 1.4em;
   color: #333;
 }
 
-.user-list ul {
+.user-list-container ul {
   list-style: none;
   padding: 0;
 }
-
+.user-list{
+  max-height: 130px;
+  overflow-y: scroll;
+  
+}
 .user-item {
   display: flex;
   align-items: center;
@@ -85,6 +86,7 @@
   margin: 0;
   font-size: 1.2em;
   text-transform: capitalize;
+  color: white;
 }
 
 .chat-header img {
@@ -174,6 +176,7 @@
   font-size: 0.8em;
   color: gray;
   margin-top: 5px;
+
 }
 
 .btn-group {
@@ -213,8 +216,9 @@
     gap: 0;
   }
 
-  .user-list {
+  .user-list-container {
     width: 100%;
+    max-height:300px ;
     margin-bottom: 20px;
   }
 

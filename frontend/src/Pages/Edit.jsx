@@ -101,8 +101,8 @@ const Profile = () => {
                 value={formData.name || ''}
                 onChange={handleChange}
                 required
-                minLength={3}
-                maxLength={50}
+                minLength={1}
+                maxLength={80}
               />
             </div>
             <div className="form-group">
@@ -114,6 +114,8 @@ const Profile = () => {
                 value={formData.email || ''}
                 onChange={handleChange}
                 required
+                style={{textTransform:'lowercase'}}
+                readOnly
               />
             </div>
             <div className="form-group">
@@ -129,7 +131,8 @@ const Profile = () => {
                     handleChange(e);
                   }
                 }}
-                maxLength="10"
+                maxLength={10}
+                minLength={10}
                 required
                 placeholder="Enter 10-digit phone number"
               />
@@ -146,6 +149,7 @@ const Profile = () => {
                 value={formData.address?.localArea || ''}
                 onChange={handleChange}
                 required
+                style={{textTransform:'capitalize'}}
               />
             </div>
             <div className="form-group">
@@ -157,6 +161,7 @@ const Profile = () => {
                 value={formData.address?.city || ''}
                 onChange={handleChange}
                 required
+                style={{textTransform:'capitalize'}}
               />
             </div>
             <div className="form-group">
@@ -168,6 +173,7 @@ const Profile = () => {
                 value={formData.address?.state || ''}
                 onChange={handleChange}
                 required
+                style={{textTransform:'capitalize'}}
               />
             </div>
             <div className="form-group">
@@ -179,6 +185,7 @@ const Profile = () => {
                 value={formData.address?.country || ''}
                 onChange={handleChange}
                 required
+                style={{textTransform:'capitalize'}}
               />
             </div>
             <div className="form-group">
@@ -194,7 +201,8 @@ const Profile = () => {
                     handleChange(e);
                   }
                 }}
-                maxLength="6"
+                maxLength={6}
+                minLength={6}
                 required
               />
             </div>
