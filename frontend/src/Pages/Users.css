@@ -1,7 +1,7 @@
 
-  /* User container */
   .user-container {
-    max-width: 1200px;
+    max-width: 95%;
+    width: 85%;
     margin: 0 auto;
     background: white;
     border-radius: 8px;
@@ -14,88 +14,137 @@
 
   }
   
-  /* Header */
-  .header {
+  .users-table-header {
     text-align: center;
     font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+    color: black;
   }
   
-  /* Search bar */
-  .search-bar {
-    text-align: center;
-    margin-bottom: 20px;
+  .users-search-bar-group{
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #0000001b;
+    border-radius: 20px;
+    margin-bottom:30px;
+    box-shadow:1px 2px 1px 2px rgba(0, 0, 0, 0.384);
   }
-  
-  .search-bar input {
-    width: 80%;
-    padding: 10px;
+  .users-search-bar{
+    width: 300px;
+    padding: 10px 15px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  .users-search-bar:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
   
-  /* No users message */
+  .users-search-bar::placeholder {
+    color: #888;
+    font-style: italic;
+  }
+
+  
+  
+  
   .no-users {
     text-align: center;
     font-size: 18px;
     color: #777;
   }
   
-  /* Table container */
-  .table-container {
+  .users-table-container {
     overflow-x: auto;
   }
   
-  /* Users table */
   .users-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    background: white;
   }
   
   .users-table th,
   .users-table td {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; 
   }
   
   .users-table th {
-    background: #f4f4f4;
+    background: green;
     font-weight: bold;
+    color: white;
+  }
+  .users-table tr{
+    background:white ;
+    cursor: pointer;
+    border: 1px solid black;
+
+  }
+  .users-table tr:hover{
+    transition: .5s ease-in-out;
+    background: rgba(152, 152, 152, 0.404);
+
   }
   
-  /* Buttons */
-  .edit-btn,
-  .delete-btn {
-    padding: 5px 8px;
+  .users-edit-btn,
+  .users-delete-btn {
+    margin: 5px;
+    padding: 5px 5px;
     color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
   }
   
-  .edit-btn {
+  .users-edit-btn {
     background: #4caf50;
   }
-  
-  .delete-btn {
-    background: #f44336;
-    margin-left: 10px;
+  .users-edit-btn:hover{
+    transition: .5s ease-in-out;
+    background: rgb(2, 73, 2);
   }
   
-  /* Responsive Design */
+  .users-delete-btn {
+    background: #f44336;
+
+  }
+  .users-delete-btn:hover{
+    transition: .5s ease-in-out;
+    background: rgb(155, 3, 3);
+
+  }
+  
+ 
   @media (max-width: 768px) {
-    .search-bar input {
-      width: 95%;
+    .user-container {
+      width: 83%;
+    }
+    .users-search-bar-group{
+      flex-direction: column;
+    }
+    .users-search-bar{
+      width: 80%;
     }
   
     .users-table th,
     .users-table td {
       font-size: 14px;
       padding: 8px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .user-container {
+      width: 80%;
+    }
+    .users-search-bar {
+      width: 70%;
     }
   }
   

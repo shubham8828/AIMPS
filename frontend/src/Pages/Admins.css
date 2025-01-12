@@ -1,145 +1,166 @@
 .admin-container {
-    max-width:95% ;
-    width: 85%;
-    background: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    margin-top: 10px;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Prevent vertical scroll unless necessary */
-    
+  max-width: 95%;
+  width: 85%;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  position: absolute;
+  top: 15px;
+}
+
+.addAdmin-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  font-size: 17px;
+}
+
+.addAdmin-btn:hover {
+  transition: 0.5s ease-in-out;
+  background: green;
+}
+
+.admin-header {
+  text-align: center;
+  font-size: 24px;
+  color: black;
+}
+
+.admin-search-bar-group {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #0000001b;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 1px 2px 1px 2px rgba(0, 0, 0, 0.384);
+}
+
+.admin-table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.admin-table th {
+  background: green;
+  font-weight: bold;
+  color: white;
+}
+
+.admin-table tr {
+  background: white;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.admin-table tr:hover {
+  transition: 0.5s ease-in-out;
+  background: rgba(152, 152, 152, 0.404);
+}
+
+.admin-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.admin-edit-btn,
+.admin-delete-btn {
+  margin: 5px;
+  padding: 5px 5px;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.admin-edit-btn {
+  background: #4caf50;
+}
+
+.admin-edit-btn:hover {
+  transition: 0.5s ease-in-out;
+  background: rgb(2, 73, 2);
+}
+
+.admin-delete-btn {
+  background: #f44336;
+}
+
+.admin-delete-btn:hover {
+  transition: 0.5s ease-in-out;
+  background: rgb(155, 3, 3);
+}
+
+/* Combined Media Queries */
+@media (max-width: 768px) {
+  .admin-container {
+    width: 90%;
+    padding: 10px;
   }
-  
-  /* Table wrapper for responsiveness */
-  .admin-table-wrapper {
-    width: 100%;
-    overflow-x: auto; /* Scroll horizontally if table is too wide */
+
+  .admin-search-bar-group {
+    height: 50px;
   }
-  
-  .admins-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    min-width: 800px; /* Ensure the table doesn't shrink too much */
+  .admin-header{
+    font-size:20px ;
   }
-  
-  .admins-table th,
-  .admins-table td {
-    padding: 12px;
-    text-align: center;
-    border: 1px solid #dee2e6;
+
+  .admin-table th,
+  .admin-table td {
+    font-size: 14px;
+    padding: 8px;
   }
-  
-  .admins-table th {
-    background-color: #007bff;
-    color: #ffffff;
-    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .admin-container {
+    width: 88%;
   }
-  
-  .admins-table tr:nth-child(even) {
-    background-color: #f8f9fa;
-  }
-  
-  .admins-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Buttons in action column */
-  button {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background: #0056b3;
-  }
-  
-  button svg {
-    vertical-align: middle;
-  }
-  
-  /* Add Admin button styles */
+
   .admin-container button {
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: 5px;
+    font-size: 12px;
+    padding: 6px 6px;
   }
-  
-  .admin-container button:hover {
-    background: #218838;
-  }
-  
-  /* Heading styles */
-  .admin-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #343a40;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .admin-container {
-      width: 90%;
-      padding: 10px;
-    }
-  
-    .admins-table th,
-    .admins-table td {
-      font-size: 14px;
-      padding: 8px;
-    }
-  
-    .admin-container button {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-  }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    .admin-container {
-      width: 88%;
-      padding: 10px;
-    }
-    .admins-table th,
-    .admins-table td {
-      font-size: 12px;
-      padding: 5px;
-    }
-  
-    .admin-container button {
-      font-size: 12px;
-      padding: 6px 6px;
-    }
+}
 
+@media (max-width: 500px) {
+  .admin-container {
+    width: 85%;
   }
+}
 
-    /* Responsive design */
-    @media (max-width: 500px) {
-        .admin-container {
-          width: 85%;
-          padding: 10px;
-        }
-    
-      }
+@media (max-width: 450px) {
+ 
+  .admin-search-bar-group{
+    height: 40px;
+  }
+  .admin-header{
+    font-size: 17px;
+  }
+}
 
-      @media (max-width: 400px) {
-        .admin-container {
-          width: 82%;
-          padding: 10px;
-        }
-    
-      }
-  
+@media (max-width: 400px) {
+  .admin-container {
+    width: 82%;
+  }
+}

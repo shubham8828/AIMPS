@@ -84,9 +84,11 @@ const Admins = () => {
   return (
     <div className="main-container">
       <div className="admin-container">
-        <h2 style={{ textAlign: "center" }}>Admins</h2>
-        <div className="admin-table-wrapper">
-          <table border="1" className="admins-table">
+        <div className="admin-search-bar-group">
+          <h2 className="admin-header">Admins</h2>
+        </div>
+        <div className="admin-table-container">
+          <table className="admin-table">
             <thead>
               <tr>
                 <th>Sr.No</th>
@@ -105,21 +107,24 @@ const Admins = () => {
                 ).map((admin, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{admin.email}</td>
-                    <td>{admin.name}</td>
+                    <td style={{textTransform:'lowercase'}}>{admin.email}</td>
+                    <td style={{textTransform:'capitalize'}}>{admin.name}</td>
                     <td>{admin.phone}</td>
                     <td>
-                      {admin.role === "root" ? "Full Access" : "Users Accessss"}
+                      {admin.role === "root" ? "Full Access" : "Users Access"}
                     </td>
-                    <td>{admin.role}</td>
+                    <td style={{textTransform:'capitalize'}}>{admin.role}</td>
                     <td>
-                      <button onClick={() => handleEdit(admin)}>
+                      <button
+                        onClick={() => handleEdit(admin)}
+                        className="admin-edit-btn"
+                      >
                         <FaEdit />
                       </button>
 
                       <button
+                        className="admin-delete-btn"
                         onClick={() => handleDelete(admin)}
-                        style={{ background: "red" }}
                       >
                         <FaTrashAlt />
                       </button>
@@ -136,7 +141,6 @@ const Admins = () => {
             </tbody>
           </table>
         </div>
-        {/* Ensure currUser is loaded and has the correct role before rendering the button */}
         {currUser && currUser.role === "root" && (
           <div
             style={{
@@ -146,10 +150,7 @@ const Admins = () => {
               width: "200px",
             }}
           >
-            <button
-              onClick={handleAddAdmin}
-              style={{ padding: "10px 20px", fontSize: "16px" }}
-            >
+            <button onClick={handleAddAdmin} className="addAdmin-btn">
               Add Admin
             </button>
           </div>

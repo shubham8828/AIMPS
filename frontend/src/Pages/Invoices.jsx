@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { FaArrowLeft, FaArrowRight, FaTrashAlt, FaEye } from "react-icons/fa";
 import Download from "../asset/download.png";
 import * as XLSX from "xlsx";
-import './Invoices.css'
+import "./Invoices.css";
 const Invoices = () => {
   const [allInvoices, setAllInvoices] = useState([]); // Holds all invoices
   const [filteredInvoices, setFilteredInvoices] = useState([]); // Holds filtered invoices
@@ -24,7 +24,6 @@ const Invoices = () => {
   // Fetch all invoices once from the backend
   const fetchInvoices = async () => {
     try {
-
       // Fetch data from the API
       const response = await axios.get("http://localhost:4000/api/invoices", {
         headers,
@@ -43,7 +42,6 @@ const Invoices = () => {
       // Update state for allInvoices and filteredInvoices
       setAllInvoices(sortedInvoices);
       setFilteredInvoices(sortedInvoices); // Initially set filtered invoices to all invoices
-
     } catch (error) {
       console.error("Error fetching invoices:", error);
     }
@@ -55,7 +53,6 @@ const Invoices = () => {
 
   // Handle invoice deletion
   const deleteInvoice = async (id) => {
-
     try {
       // Sending `id` as a URL parameter
       await axios
@@ -79,7 +76,6 @@ const Invoices = () => {
     );
     setFilteredInvoices(results);
     setCurrentPage(1); // Reset to first page when search term changes
-
   }, [searchTerm, allInvoices]);
 
   // Pagination: Get current page invoices
@@ -102,7 +98,6 @@ const Invoices = () => {
 
   // Download customer and product data in Excel format
   const downloadCustomerData = (invoices) => {
-
     if (!Array.isArray(invoices) || invoices.length === 0) {
       console.error("No invoices found.");
       return;
@@ -147,106 +142,102 @@ const Invoices = () => {
   };
 
   return (
-    <div className="Container" >
-      {allInvoices.length === 0 ? (
-        // If no invoices are available
-        <div className="no-invoice-wrapper">
-          {user?.role === "user" ? (
-            <>
+    <div className="main-container">
+      <div className="invoice-container">
+        {allInvoices.length === 0 ? (
+          // If no invoices are available
+          <div className="no-invoice-wrapper">
+            {user?.role === "user" ? (
+              <>
+                <p>No invoices available</p>
+                <button onClick={() => navigate("/new-invoice")}>
+                  Create New Invoice
+                </button>
+              </>
+            ) : (
               <p>No invoices available</p>
-              <button onClick={() => navigate("/new-invoice")}>
-                Create New Invoice
-              </button>
-            </>
-          ) : (
-            <p>No invoices available</p>
-          )}
-        </div>
-      ) : (
-        // If invoices are available, show search bar and table
-        <>
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by Customer Name"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            )}
           </div>
-          <div className="invoices-table-container">
-            <table
-              style={{
-                minWidth: "91vw",
-                maxWidth: "91vw",
-                borderCollapse: "collapse",
-                margin: "20px 0px",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>Sr. No.</th>
-                  <th>Invoice ID</th>
-                  <th>Customer Name</th>
-                  <th>Date</th>
-                  <th>Total</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentInvoices.map((data, index) => {
-                  const serialNumber = startIndex + index + 1;
-                  return (
-                    <tr key={data._id || index}>
-                      <td>{serialNumber}</td>
-                      <td>{data.invoiceId}</td>
-                      <td>{data.to}</td>
-                      <td>{new Date(data.date).toLocaleDateString()}</td>
-                      <td>Rs. {data.total.toFixed(2)}</td>
-                      <td>{data.address}</td>
-                      <td>{data.phone}</td>
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() => deleteInvoice(data._id)}
-                        >
-                          <FaTrashAlt />
-                        </button>
-                        <button
-                          onClick={() =>
-                            navigate("/invoice-details", { state: data })
-                          }
-                          className="view-btn"
-                        >
-                          <FaEye />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          {filteredInvoices.length > itemsPerPage && (
-            <div className="more">
-              <button
-                className="previous-btn"
-                onClick={handlePrevious}
-                disabled={currentPage === 1}
-              >
-                <FaArrowLeft />
-              </button>
-              <button
-                className="next-btn"
-                onClick={handleNext}
-                disabled={currentPage === totalPages}
-              >
-                <FaArrowRight />
-              </button>
+        ) : (
+          <>
+            <div className="invoice-search-bar-group">
+              <h1 className="invoice-header">Invoices </h1>
+              <input
+                type="text"
+                placeholder="Search by Customer Name"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="invoice-search-bar"
+              />
             </div>
-          )}
-          <button
+
+            <div className="invoice-table-container">
+              <table className="invoice-table">
+                <thead>
+                  <tr>
+                    <th>Sr. No.</th>
+                    <th>Invoice ID</th>
+                    <th>Customer Name</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentInvoices.map((data, index) => {
+                    const serialNumber = startIndex + index + 1;
+                    return (
+                      <tr key={data._id || index}>
+                        <td>{serialNumber}</td>
+                        <td>{data.invoiceId}</td>
+                        <td style={{textTransform:'capitalize'}}>{data.to}</td>
+                        <td>{new Date(data.date).toLocaleDateString()}</td>
+                        <td>Rs.{data.total}</td>
+                        <td style={{textTransform:'capitalize'}}>{data.address}</td>
+                        <td>{data.phone}</td>
+                        <td>
+                          <button
+                            className="invoice-delete-btn"
+                            onClick={() => deleteInvoice(data._id)}
+                          >
+                            <FaTrashAlt />
+                          </button>
+                          <button
+                            onClick={() =>
+                              navigate("/invoice-details", { state: data })
+                            }
+                            className="invoice-edit-btn"
+                          >
+                            <FaEye />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            {filteredInvoices.length > itemsPerPage && (
+              <div className="invoice-more">
+                <button
+                  className="invoice-previous-btn"
+                  onClick={handlePrevious}
+                  disabled={currentPage === 1}
+                >
+                  <FaArrowLeft />
+                </button>
+                <button
+                  className="invoice-next-btn"
+                  onClick={handleNext}
+                  disabled={currentPage === totalPages}
+                >
+                  <FaArrowRight />
+                </button>
+              </div>
+            )}
+            {/* <button
             className="report-download-btn"
             onClick={() => downloadCustomerData(invoice)}
           >
@@ -255,9 +246,10 @@ const Invoices = () => {
               className="report-download-btn-icon"
               alt="Download Report"
             />
-          </button>
-        </>
-      )}
+          </button> */}
+          </>
+        )}
+      </div>
     </div>
   );
 };

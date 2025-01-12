@@ -43,7 +43,7 @@ const PaymentList = () => {
 
   // Search functionality: Update filtered data
   useEffect(() => {
-    const lowerCasedSearchTerm = searchTerm.toLowerCase();
+    const lowerCasedSearchTerm = searchTerm.toLowerCase().trim();
     const filtered = paymentData.filter(
       (payment) =>
         (payment.customerName.toLowerCase().includes(lowerCasedSearchTerm) ||
@@ -123,18 +123,18 @@ const PaymentList = () => {
     <div className="main-container">
     <div className="payment-list-container">
 
-      <div className="payment-top">
-        <h1>Payment Details</h1>
-        <div className="filters">
+      <div className="payment-search-bar-group">
+        <h1 className="payment-header">Payment Details</h1>
+        <div className="payment-filters">
           <input
             type="text"
             placeholder="Search by Customer Name, Invoice ID, Phone, or Payment Method"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+            className="payment-search-bar"
           />
           <select
-            className="status-filter"
+            className="payment-status-filter"
             value={paymentStatus}
             onChange={(e) => setPaymentStatus(e.target.value)}
           >
@@ -148,7 +148,7 @@ const PaymentList = () => {
         </div>
       </div>
 
-      <div className="payment-table-wrapper">
+      <div className="payment-table-container">
         <table className="payment-table">
           <thead>
             <tr>
@@ -171,11 +171,11 @@ const PaymentList = () => {
               <tr key={index}>
                 <td>{startIndex + index + 1}</td>
                 <td>{transaction.invoiceId}</td>
-                <td>{transaction.customerName}</td>
+                <td style={{textTransform:'capitalize'}}>{transaction.customerName}</td>
                 <td>{transaction.customerPhone}</td>
-                <td>{transaction.amount.toFixed(2)}</td>
+                <td>{transaction.amount}</td>
                 <td>{transaction.currency}</td>
-                <td>{transaction.paymentStatus}</td>
+                <td >{transaction.paymentStatus}</td>
                 <td>
                   {transaction.paymentDate
                     ? new Date(transaction.paymentDate).toLocaleDateString()
@@ -183,7 +183,7 @@ const PaymentList = () => {
                 </td>
                 <td>{transaction.paymentMethod}</td>
                 <td>{transaction.paymentId}</td>
-                <td>
+                <td style={{minWidth:'150px'}}>
                   {transaction.paymentMethod === "Card" &&
                   transaction.cardDetails
                     ? `**** **** **** ${transaction.cardDetails.cardNumber.slice(
@@ -210,16 +210,16 @@ const PaymentList = () => {
       </div>
 
       {filteredData.length > itemsPerPage && (
-        <div className="more">
+        <div className="payment-more">
           <button
-            className="previous-btn"
+            className="payment-previous-btn"
             onClick={handlePrevious}
             disabled={currentPage === 1}
           >
             <FaArrowLeft />
           </button>
           <button
-            className="next-btn"
+            className="payment-next-btn"
             onClick={handleNext}
             disabled={currentPage === totalPages}
           >

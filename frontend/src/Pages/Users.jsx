@@ -88,24 +88,21 @@ const Users = () => {
   return (
     <div className="main-container">
       <div className="user-container">
-        {userRole === "user" && (
-          <>
-            <h2 className="header">Users</h2>
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder="Search by Name, Email, City, State, etc."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </>
-        )}
+        <div className="users-search-bar-group">
+          <h1 className="users-table-header">Users</h1>
+          <input
+            type="text"
+            placeholder="Search by Name, Email, City, State, etc."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="users-search-bar"
+          />
+        </div>
         {filteredUsers.length === 0 && (
           <div className="no-users">No users available</div>
         )}
         {filteredUsers.length > 0 && (
-          <div className="table-container">
+          <div className="users-table-container">
             <table className="users-table">
               <thead>
                 <tr>
@@ -124,26 +121,26 @@ const Users = () => {
                 {filteredUsers.map((user, index) => (
                   <tr key={user._id}>
                     <td>{index + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.address?.city || "N/A"}</td>
-                    <td>{user.address?.state || "N/A"}</td>
-                    <td>{user.address?.country || "N/A"}</td>
-                    <td>{user.address?.localArea || "N/A"}</td>
+                    <td style={{textTransform:'capitalize'}}>{user.name}</td>
+                    <td style={{textTransform:'lowercase'}}>{user.email}</td>
+                    <td style={{textTransform:'capitalize'}}>{user.address?.city || "N/A"}</td>
+                    <td style={{textTransform:'capitalize'}}>{user.address?.state || "N/A"}</td>
+                    <td style={{textTransform:'capitalize'}}>{user.address?.country || "N/A"}</td>
+                    <td style={{textTransform:'capitalize'}}>{user.address?.localArea || "N/A"}</td>
                     <td>{user.address?.pin || "N/A"}</td>
                     <td>
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEdit(user)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        <FaTrashAlt />
-                      </button>
+                        <button
+                          className="users-edit-btn"
+                          onClick={() => handleEdit(user)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="users-delete-btn"
+                          onClick={() => handleDelete(user._id)}
+                        >
+                          <FaTrashAlt />
+                        </button>
                     </td>
                   </tr>
                 ))}
