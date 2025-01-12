@@ -9,6 +9,7 @@ import html2canvas from "html2canvas";
 import Download from "../asset/download.png";
 import axios from "axios";
 import jsPDF from "jspdf";
+import Spinner from "../Component/Spinner.jsx";
 const Home = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Start with `null` instead of an empty object
 
@@ -101,29 +102,25 @@ const Home = () => {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <Typing />
-      </Suspense>
-      <div className="main-container">
-        <div className="home-container">
-          <Suspense fallback={<div>Loading...</div>}>
+        <div className="main-container">
+          <div className="home-container">
             <Cards isAdmin={isAdmin} />
-          </Suspense>
-          {isAdmin && (
-            <Suspense fallback={<div>Loading...</div>}>
-              <LineChart />
-              <PieChart />
-            </Suspense>
-          )}
-          <Suspense fallback={<div>Loading...</div>}>
+            {isAdmin && (
+              <>
+                <LineChart />
+                <PieChart />
+              </>
+            )}
             <Chart />
-          </Suspense>
-        </div>
+          </div>
 
-        <button className="report-download-btn" onClick={reportDownload}>
-          <img src={Download} className="report-download-btn-icon" />
-        </button>
-      </div>
+          <button className="report-download-btn" onClick={reportDownload}>
+            <img src={Download} className="report-download-btn-icon" />
+          </button>
+        </div>
+      </Suspense>
     </>
   );
 };

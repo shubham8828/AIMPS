@@ -1,8 +1,7 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState} from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import axios from "axios";
 
-// Lazy load components and pages
 const Navbar = React.lazy(() => import("./Component/Navbar.jsx"));
 const LandingPage = React.lazy(() => import("./Pages/LandingPage.jsx"));
 const Contact = React.lazy(() => import("./Pages/Contact.jsx"));
@@ -60,7 +59,6 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
         <Navbar setToken={setToken}>
           <Routes>
             <Route path="/" element={!token ? <LandingPage /> : <Home />} />
@@ -86,7 +84,6 @@ const PrivateRoute = ({ children, allowedRoles }) => {
           </Routes>
         </Navbar>
         <Footer />
-      </Suspense>
     </BrowserRouter>
   );
 };

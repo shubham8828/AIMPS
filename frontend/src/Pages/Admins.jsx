@@ -4,9 +4,11 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import toast from "react-hot-toast";
 import "./Admins.css";
+import Spinner from "../Component/Spinner";
 const Admins = () => {
   const [Users, setUsers] = useState([]); // Initialize with an empty array
   const [currUser, setCurrUser] = useState(null); // Current logged-in user (initialize with null)
+  const[loading,setLoading]=useState(false)
   const token = localStorage.getItem("token");
 
   const headers = {
@@ -20,6 +22,7 @@ const Admins = () => {
   }, []); // Ensures fetchUsers runs only when the component mounts.
 
   const fetchUsers = async () => {
+    setLoading(true)
     try {
       const usersResponse = await axios.get("http://localhost:4000/api/users", {
         headers,
@@ -29,6 +32,9 @@ const Admins = () => {
       console.log(usersResponse.data.user); // Log the current user for debugging
     } catch (error) {
       console.error("Error fetching admin data:", error);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -80,6 +86,9 @@ const Admins = () => {
     }
     navigate("/admin/add"); // Redirect to /admin/add
   };
+  if(loading){
+    return <Spinner/>
+  }
 
   return (
     <div className="main-container">
