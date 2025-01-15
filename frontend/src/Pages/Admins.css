@@ -1,10 +1,19 @@
 .admin-container {
-  max-width: 95%;
-  width: 85%;
-  background: #ffffff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding:2px;
+  background-color: #f8f8f8;
   border-radius: 8px;
-  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width:95%;
+  box-sizing: border-box;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  
 }
 
 .addAdmin-btn {
@@ -13,53 +22,42 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   padding: 10px;
-  font-size: 17px;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .addAdmin-btn:hover {
-  transition: 0.5s ease-in-out;
   background: green;
+  transform: scale(1.05);
 }
 
 .admin-header {
   text-align: center;
   font-size: 24px;
   color: black;
+  margin: 20px;
 }
 
-.admin-search-bar-group {
-  height: 70px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  background: #0000001b;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  box-shadow: 1px 2px 1px 2px rgba(0, 0, 0, 0.384);
-}
+
 
 .admin-table-container {
-  overflow-x: auto;
-  overflow-y: scroll;
-  height: auto;
-  max-height: 75vh;
-}
-.admin-table-container::-webkit-scrollbar{
-  display: none;
+  max-width: 100%;
+  overflow-x: scroll;
 }
 
+
+
 .admin-table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   text-align: left;
 }
 
 .admin-table th,
 .admin-table td {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
 }
 
@@ -72,29 +70,28 @@
 .admin-table tr {
   background: white;
   cursor: pointer;
-  border: 1px solid black;
+  transition: background 0.3s ease;
 }
 
 .admin-table tr:hover {
-  transition: 0.5s ease-in-out;
-  background: rgba(152, 152, 152, 0.404);
+  background: rgba(152, 152, 152, 0.3);
 }
 
 .admin-button-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: 10px;
+  column-gap: 10px;
 }
 
 .admin-edit-btn,
 .admin-delete-btn {
-  margin: 5px;
-  padding: 5px 5px;
+  margin: 5px ;
+  padding: 8px;
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .admin-edit-btn {
@@ -102,8 +99,8 @@
 }
 
 .admin-edit-btn:hover {
-  transition: 0.5s ease-in-out;
   background: rgb(2, 73, 2);
+  transform: scale(1.05);
 }
 
 .admin-delete-btn {
@@ -111,21 +108,19 @@
 }
 
 .admin-delete-btn:hover {
-  transition: 0.5s ease-in-out;
   background: rgb(155, 3, 3);
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
-  .admin-container {
-    width: 90%;
-    padding: 10px;
+ 
+
+  .admin-header {
+    font-size: 20px;
   }
 
   .admin-search-bar-group {
     height: 50px;
-  }
-  .admin-header{
-    font-size:20px ;
   }
 
   .admin-table th,
@@ -136,34 +131,27 @@
 }
 
 @media (max-width: 600px) {
-  .admin-container {
-    width: 88%;
-  }
-
-  .admin-container button {
-    font-size: 12px;
-    padding: 6px 6px;
-  }
-}
-
-@media (max-width: 500px) {
-  .admin-container {
-    width: 85%;
-  }
-}
-
-@media (max-width: 450px) {
  
-  .admin-search-bar-group{
-    height: 40px;
+
+  .addAdmin-btn {
+    font-size: 14px;
+    padding: 8px;
   }
-  .admin-header{
-    font-size: 17px;
+
+  .admin-search-bar-group {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
 @media (max-width: 400px) {
-  .admin-container {
-    width: 82%;
+  
+
+  .admin-header {
+    font-size: 18px;
+  }
+
+  .addAdmin-btn {
+    font-size: 12px;
   }
 }

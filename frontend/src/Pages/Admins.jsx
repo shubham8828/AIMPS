@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "./Admins.css";
 import Spinner from "../Component/Spinner";
@@ -9,7 +9,7 @@ import Spinner from "../Component/Spinner";
 const Admins = () => {
   const [Users, setUsers] = useState([]); // Initialize with an empty array
   const [currUser, setCurrUser] = useState(null); // Current logged-in user (initialize with null)
-  const[loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
   const headers = {
@@ -23,7 +23,7 @@ const Admins = () => {
   }, []); // Ensures fetchUsers runs only when the component mounts.
 
   const fetchUsers = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const usersResponse = await axios.get("http://localhost:4000/api/users", {
         headers,
@@ -33,9 +33,8 @@ const Admins = () => {
       console.log(usersResponse.data.user); // Log the current user for debugging
     } catch (error) {
       console.error("Error fetching admin data:", error);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,8 +86,8 @@ const Admins = () => {
     }
     navigate("/admin/add"); // Redirect to /admin/add
   };
-  if(loading){
-    return <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
@@ -117,13 +116,19 @@ const Admins = () => {
                 ).map((admin, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td style={{textTransform:'lowercase'}}>{admin.email}</td>
-                    <td style={{textTransform:'capitalize'}}>{admin.name}</td>
+                    <td style={{ textTransform: "lowercase" }}>
+                      {admin.email}
+                    </td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {admin.name}
+                    </td>
                     <td>{admin.phone}</td>
                     <td>
                       {admin.role === "root" ? "Full Access" : "Users Access"}
                     </td>
-                    <td style={{textTransform:'capitalize'}}>{admin.role}</td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {admin.role}
+                    </td>
                     <td>
                       <button
                         onClick={() => handleEdit(admin)}
@@ -166,7 +171,6 @@ const Admins = () => {
           </div>
         )}
       </div>
-
     </div>
   );
 };

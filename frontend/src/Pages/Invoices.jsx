@@ -6,6 +6,7 @@ import { FaArrowLeft, FaArrowRight, FaTrashAlt, FaEye } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import Spinner from "../Component/Spinner";
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import Footer from './Footer.jsx'
 
 import "./Invoices.css";
 const Invoices = () => {
@@ -131,6 +132,7 @@ const Invoices = () => {
     return <Spinner />
   }
   return (
+    <>
     <div className="main-container">
       <div className="invoice-container">
         {allInvoices.length === 0 ? (
@@ -232,6 +234,8 @@ const Invoices = () => {
         )}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

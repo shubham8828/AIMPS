@@ -10,6 +10,7 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import Spinner from "../Component/Spinner.jsx";
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import Footer from "./Footer.jsx";
 
 const Home = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Start with `null` instead of an empty object
@@ -30,14 +31,11 @@ const Home = () => {
           setIsAdmin(true);
         }
         setLoading(false);
-
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-
-      })
-      
+      });
   }, []);
 
   const reportDownload = () => {
@@ -46,8 +44,8 @@ const Home = () => {
 
     if (element) {
       html2canvas(element, {
-        scale: 2, 
-        useCORS: true, 
+        scale: 2,
+        useCORS: true,
       }).then((canvas) => {
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -92,36 +90,37 @@ const Home = () => {
         }
         pdf.save("Report.pdf");
         setLoading(false);
-
       });
     }
   };
-  if(loading)
-  {
-    return <Spinner />
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
-    <>
+    <div className="main-container">
       <Suspense fallback={<Spinner />}>
         <Typing />
-        <div className="main-container">
-          <div className="home-container">
-            <Cards isAdmin={isAdmin} />
-            {isAdmin && (
-              <>
-                <LineChart />
-                <PieChart />
-              </>
-            )}
-            <Chart />
-          </div>
-
-          
+        <div className="home-container">
+          <Cards isAdmin={isAdmin} />
+          {isAdmin && (
+            <>
+              {/* <LineChart />
+              <PieChart /> */}
+            </>
+          )}
+          {/* <Chart /> */}
         </div>
       </Suspense>
-      <button className="download-btn" onClick={reportDownload} title="click to download report"> <FaCloudDownloadAlt /></button>
-    </>
+      <button
+        className="download-btn"
+        onClick={reportDownload}
+        title="click to download report"
+      >
+        <FaCloudDownloadAlt />
+      </button>
+      <Footer />
+    </div>
   );
 };
 

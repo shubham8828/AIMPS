@@ -8,14 +8,14 @@ const Section5 = lazy(() => import("../Component/Section/Section5"));
 const Section6 = lazy(() => import("../Component/Section/Section6"));
 const Section7 = lazy(() => import("../Component/Section/Section7"));
 import './LandingPage.css'
+import Footer from './Footer.jsx'
+
 const LandingPage = () => {
   return (
-    <>
-
+    <div className="main-container">
       <Suspense fallback={<div>Loading...</div>}>
         <Section />
       </Suspense>
-      <div className="main-container">
         <div className="landingpage-container">
           <Suspense fallback={<div>Loading...</div>}>
             <Section1 />
@@ -37,8 +37,10 @@ const LandingPage = () => {
             <Section7 />
           </Suspense>
         </div>
+        <Footer />
+
       </div>
-    </>
+      
   );
 };
 

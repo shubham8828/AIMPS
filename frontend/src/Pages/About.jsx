@@ -1,9 +1,10 @@
 import React from "react";
 import "./About.css";
-
+import Footer from './Footer.jsx'
 const About = () => {
     
   return (
+    <>
     <div className="main-container">
       <div className="about-container">
         <h2>About AIMPS</h2>
@@ -103,6 +104,9 @@ const About = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+
+    </>
   );
 };
 

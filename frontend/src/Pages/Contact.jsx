@@ -1,8 +1,11 @@
 import React from "react";
 import { FaEnvelope, FaUserAlt, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import "./Contact.css";
+import Footer from './Footer.jsx'
+
 const Contact = () => {
   return (
+    <>    
     <div className="main-container">
       <div className="contact-container">
         <h1 className="contact-header">Contact Us</h1>
@@ -56,6 +59,8 @@ const Contact = () => {
         </p>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

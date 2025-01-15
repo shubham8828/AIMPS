@@ -1,10 +1,13 @@
 import React, { useState, useRef } from "react";
 import defaultProfile from "../asset/logo.png"; // Replace with the path to your default profile image
+import user from "../asset/user.png"; // Replace with the path to your default profile image
 import axios from "axios";
 import ImageCompressor from "image-compressor.js"; // For image compression
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "./AuthForm.css";
+import Footer from "../Pages/Footer.jsx";
+
 const AuthForm = ({ setToken }) => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register forms
   const [formData, setFormData] = useState({
@@ -101,219 +104,226 @@ const AuthForm = ({ setToken }) => {
   };
 
   return (
-    <div className="main-container" style={{ height: "auto" }}>
-      <div className="auth-container">
-        <div className="form-toggle">
-          <button
-            className={`toggle-btn ${isLogin ? "active" : ""}`}
-            onClick={() => setIsLogin(true)}
-          >
-            Login
-          </button>
-          <button
-            className={`toggle-btn ${!isLogin ? "active" : ""}`}
-            onClick={() => setIsLogin(false)}
-          >
-            Register
-          </button>
-        </div>
+    <div className="main-container">
+      <div className="form-container">
+        <div className="auth-container">
+          <div className="form-toggle">
+            <button
+              className={`toggle-btn ${isLogin ? "active" : ""}`}
+              onClick={() => setIsLogin(true)}
+            >
+              Login
+            </button>
+            <button
+              className={`toggle-btn ${!isLogin ? "active" : ""}`}
+              onClick={() => setIsLogin(false)}
+            >
+              Register
+            </button>
+          </div>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {!isLogin && (
-            <>
-              {/* Image Input */}
-              <div className="form-group">
-                <h2 style={{ textAlign: "center" }}>Profile Image</h2>
-                <div className="profile-image">
-                  <img
-                    src={formData.image}
-                    alt="Profile"
-                    className="profile-pic"
-                    onClick={triggerImageUpload}
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <>
+                {/* Image Input */}
+                <div className="form-group">
+                  <h2 style={{ textAlign: "center" }}>Profile Image</h2>
+                  <div className="profile-image">
+                    <img
+                      src={formData.image}
+                      alt="Profile"
+                      className="profile-pic"
+                      onClick={triggerImageUpload}
+                    />
+                  </div>
+                  <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    onChange={handleChange}
+                    ref={imageRef}
+                    style={{ display: "none" }}
                   />
                 </div>
-                <input
-                  type="file"
-                  name="image"
-                  id="image"
-                  accept="image/*"
-                  onChange={handleChange}
-                  ref={imageRef}
-                  style={{ display: "none" }}
-                />
-              </div>
 
-              {/* Name Input */}
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  minLength={3}
-                  maxLength={50}
-                />
-              </div>
+                {/* Name Input */}
+                <div className="form-group">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    minLength={3}
+                    maxLength={50}
+                  />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="name">Shop/Company Name</label>
-                <input
-                  type="text"
-                  name="shopname"
-                  id="shopname"
-                  value={formData.shopname}
-                  onChange={handleChange}
-                  required
-                  minLength={3}
-                  maxLength={50}
-                />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="name">Shop/Company Name</label>
+                  <input
+                    type="text"
+                    name="shopname"
+                    id="shopname"
+                    value={formData.shopname}
+                    onChange={handleChange}
+                    required
+                    minLength={3}
+                    maxLength={50}
+                  />
+                </div>
 
-              {/* Email Input */}
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+                {/* Email Input */}
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-              {/* Phone Input */}
-              <div className="form-group">
-                <label htmlFor="phone">Mobile No.</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  id="phone"
-                  value={formData.phone}
-                  onChange={(e) => {
-                    const inputValue = e.target.value.replace(/[^0-9]/g, "");
-                    if (inputValue.length <= 10) {
-                      setFormData({ ...formData, phone: inputValue });
-                    }
-                  }}
-                  required
-                  pattern="[0-9]{10}"
-                  placeholder="Enter 10-digit mobile number"
-                  maxLength={10}
-                />
-              </div>
+                {/* Phone Input */}
+                <div className="form-group">
+                  <label htmlFor="phone">Mobile No.</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/[^0-9]/g, "");
+                      if (inputValue.length <= 10) {
+                        setFormData({ ...formData, phone: inputValue });
+                      }
+                    }}
+                    required
+                    pattern="[0-9]{10}"
+                    placeholder="Enter 10-digit mobile number"
+                    maxLength={10}
+                  />
+                </div>
 
-              {/* Address Inputs */}
-              <div className="form-group">
-                <label htmlFor="address.localArea">Local Area</label>
-                <input
-                  type="text"
-                  name="address.localArea"
-                  id="localArea"
-                  value={formData.address.localArea}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address.city">City</label>
-                <input
-                  type="text"
-                  name="address.city"
-                  id="city"
-                  value={formData.address.city}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address.state">State</label>
-                <input
-                  type="text"
-                  name="address.state"
-                  id="state"
-                  value={formData.address.state}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address.country">Country</label>
-                <input
-                  type="text"
-                  name="address.country"
-                  id="country"
-                  value={formData.address.country}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address.pin">PIN</label>
-                <input
-                  type="text"
-                  name="address.pin"
-                  id="pin"
-                  value={formData.address.pin}
-                  onChange={handleChange}
-                  required
-                  pattern="[0-9]{6}" // PIN validation
-                  maxLength={6}
-                />
-              </div>
+                {/* Address Inputs */}
+                <div className="form-group">
+                  <label htmlFor="address.localArea">Local Area</label>
+                  <input
+                    type="text"
+                    name="address.localArea"
+                    id="localArea"
+                    value={formData.address.localArea}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address.city">City</label>
+                  <input
+                    type="text"
+                    name="address.city"
+                    id="city"
+                    value={formData.address.city}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address.state">State</label>
+                  <input
+                    type="text"
+                    name="address.state"
+                    id="state"
+                    value={formData.address.state}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address.country">Country</label>
+                  <input
+                    type="text"
+                    name="address.country"
+                    id="country"
+                    value={formData.address.country}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="address.pin">PIN</label>
+                  <input
+                    type="text"
+                    name="address.pin"
+                    id="pin"
+                    value={formData.address.pin}
+                    onChange={handleChange}
+                    required
+                    pattern="[0-9]{6}" // PIN validation
+                    maxLength={6}
+                  />
+                </div>
 
-              {/* Password Input */}
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </>
-          )}
+                {/* Password Input */}
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
 
-          {/* Login Form */}
-          {isLogin && (
-            <>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            {/* Login Form */}
+            {isLogin && (
+              <>
+                <div className="login-form-icon">
+                  <img src={user} alt="" />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </>
-          )}
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-          <button type="submit" className="submit-btn">
-            {isLogin ? " Login" : " Register"}
-          </button>
-        </form>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
+
+            <button type="submit" className="submit-btn">
+              {isLogin ? " Login" : " Register"}
+            </button>
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

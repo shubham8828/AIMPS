@@ -1,12 +1,11 @@
 
 .team-container{
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
   background-color: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  margin-top:10px;
-  width: 100%;
-  max-width: 100%;
+  margin:auto;
+  width:95%;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
@@ -14,12 +13,12 @@
 .projectCard {
     background-color: #4caf50;
     color: #fff;
-    padding: 20px;
+    padding: 1opx;
     text-align: center;
     border-radius: 10px;
-    width: 100%;
+    width: 95%;
     max-width: 800px;
-    margin: auto;
+
   }
   
   .projectTitle {

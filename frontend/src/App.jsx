@@ -12,7 +12,7 @@ const AuthForm = React.lazy(() => import("./Component/AuthForm.jsx"));
 const Home = React.lazy(() => import("./Pages/Home.jsx"));
 const InvoiceDetails = React.lazy(() => import("./Component/InvoiceDetails.jsx"));
 const About = React.lazy(() => import("./Pages/About.jsx"));
-const Footer = React.lazy(() => import("./Pages/Footer.jsx"));
+//const Footer = React.lazy(() => import("./Pages/Footer.jsx"));
 const Payment = React.lazy(() => import("./Pages/Payment.jsx"));
 const PaymentList = React.lazy(() => import("./Pages/PaymentList.jsx"));
 const Message = React.lazy(() => import("./Pages/Message.jsx"));
@@ -83,7 +83,7 @@ const PrivateRoute = ({ children, allowedRoles }) => {
             <Route path="/message" element={<PrivateRoute><Message /></PrivateRoute>} />
           </Routes>
         </Navbar>
-        <Footer />
+        {/* <Footer /> */}
     </BrowserRouter>
   );
 };
