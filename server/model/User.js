@@ -3,62 +3,84 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"], 
     unique: true,
+    lowercase: true, 
+    trim: true, 
+    match: [
+      /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+      "Please provide a valid email address",
+    ],
+    index: true,
   },
   name: {
     type: String,
-    required: true,
+    required: [true, "Name is required"],
+    trim: true,
+    minlength: [3, "Name must be at least 3 characters long"],
+    maxlength: [50, "Name cannot exceed 50 characters"],
   },
-  shopname:{
-    type:String,
-    required:true,
-    default:"N/A"
-
+  shopname: {
+    type: String,
+    required: [true, "Shop name is required"],
+    default: "N/A",
+    trim: true,
+    maxlength: [100, "Shop name cannot exceed 100 characters"],
   },
   phone: {
     type: String,
-    required: true,
+    required: [true, "Phone number is required"],
+    match: [/^\d{10}$/, "Phone number must be 10 digits"],
   },
   address: {
     localArea: {
       type: String,
-      required: true,
+      required: [true, "Local area is required"],
+      trim: true,
     },
     city: {
       type: String,
-      required: true,
+      required: [true, "City is required"],
+      trim: true,
     },
     state: {
       type: String,
-      required: true,
+      required: [true, "State is required"],
+      trim: true,
     },
     country: {
       type: String,
-      required: true,
+      required: [true, "Country is required"],
+      trim: true,
     },
     pin: {
       type: String,
-      required: true,
+      required: [true, "PIN is required"],
+      match: [/^\d{6}$/, "PIN must be 6 digits"],
     },
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "Password is required"],
+    minlength: [8, "Password must be at least 8 characters long"],
   },
   image: {
-    type: String, // URL or Base64 string
+    type: String, 
+    
   },
-  role:{
-    type:String,
-    default:"user"
+  role: {
+    type: String,
+    default: "user",
+    enum: ["admin", "user", "root"],
   },
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically set the current date when the document is created
+    default: Date.now,
   },
 });
 
-const User = mongoose.model("User", userSchema);
-export default User;
+userSchema.index({ email: 1 }, { unique: true });
 
+const User = mongoose.model("User", userSchema);
+
+export default User;

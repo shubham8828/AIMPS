@@ -29,10 +29,14 @@ Routes.post('/register', register);
 
 
 Routes.use(AuthenticateToken);
+
+Routes.get('/user', getUser);
+Routes.delete('/deleteuser/:id', deleteUser);
+
+
 Routes.post('/create', newInvoive);
 Routes.get('/invoices', invoices);
 Routes.delete('/delete/:id', deleteInvoice);
-Routes.get('/user', getUser);
 Routes.post('/search', searchCustomer); // for searching customers
 Routes.put('/update', update); // update user profile
 Routes.put('/updateInvoice', updateInvoice); // updating invoice
@@ -41,7 +45,6 @@ Routes.post('/payment-data', getUserPayments);
 Routes.post('/getInvoice', getInvoice);
 Routes.post('/getPaymentData', getPaymentData);
 Routes.get('/users', getUsers);
-Routes.delete('/deleteuser/:id', deleteUser);
 Routes.post('/messages', getMessages);
 Routes.post('/newmessage', newMessages);
 
