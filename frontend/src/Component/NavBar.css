@@ -1,31 +1,38 @@
 
-
 .navbar {
-    display: flex;
-    flex-direction: row;
-    width: 100%; /* Use 100% instead of 100vw */
-    max-width: 100%;
-    height: auto;
-    margin-top: 0px;
-  }
-  
-  .sidebar {
-    background: rgb(16, 35, 41);
-    color: #fff;
-    height: auto;
-    width: 300px;
-    transition: all 0.5s ease-in-out;
-  }
-  
-  main {
-    width:100%; 
-    max-width: 100%; 
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar {
+  background: rgb(16, 35, 41);
+  color: #fff;
+  height: auto;
+  transition: all 1s ease-in-out;
+  max-width: 150px; 
+  width: 50px;
+}
+
+main {
+  width: calc(100% - 50px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: width 1s ease-in-out;
+}
+
+.sidebar.expanded {
+  width: 150px;
+}
+
+main.expanded {
+  width: calc(100% - 150px);
+}
   
   .top_section {
     display: flex;

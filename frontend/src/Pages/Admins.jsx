@@ -161,8 +161,8 @@ const Admins = () => {
             style={{
               marginTop: "20px",
               display: "flex",
-              justifyContent: "flex-start",
-              width: "200px",
+              justifyContent: "center",
+              width: "100px",
             }}
           >
             <button onClick={handleAddAdmin} className="addAdmin-btn">
