@@ -30,7 +30,6 @@ const Admins = () => {
       });
       setUsers(usersResponse.data.users);
       setCurrUser(usersResponse.data.user);
-      console.log(usersResponse.data.user); // Log the current user for debugging
     } catch (error) {
       console.error("Error fetching admin data:", error);
     } finally {

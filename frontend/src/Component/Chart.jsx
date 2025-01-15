@@ -140,8 +140,8 @@ const LineChart = ({ data }) => {
   };
 
   return (
-    <div className="Container" style={{background:'white', marginTop:'15px'}}>
-      <h2 style={{ textAlign: "center" }}>Monthly Invoice and Price Summary</h2>
+    <div className="pie-chart-container" style={{background:'white', marginTop:'15px'}}>
+      <h2 style={{ textAlign: "center" }} className="chart-title">Monthly Invoice and Price Summary</h2>
       <Line data={chartConfig} options={options} />
     </div>
   );
@@ -150,8 +150,8 @@ const LineChart = ({ data }) => {
 // Grouped Bar Chart Component
 const GroupedBarChart = ({ chartData }) => {
   return (
-    <div className="Container" style={{background:'white', marginTop:'15px'}}>
-      <h3 style={{ textAlign: "center" }}>
+    <div className="pie-chart-container" style={{background:'white', marginTop:'15px'}}>
+      <h3 style={{ textAlign: "center" }} className="chart-title">
         Month-Wise Invoice Count and Total Price
       </h3>
       <ResponsiveContainer width="100%" height={400}>
@@ -227,8 +227,8 @@ const PieChart = ({ data }) => {
   };
 
   return (
-    <div className="chart-container ">
-      <h2 style={{ textAlign: 'center' }}>Monthly Invoice Analysis</h2>
+    <div className="pie-chart-container ">
+      <h2 style={{ textAlign: 'center' }} className="chart-title">Monthly Invoice Analysis</h2>
       <div className="chart-wrapper">
         <div className="chart-box">
           <h3>Total Price Distribution (Month-wise)</h3>

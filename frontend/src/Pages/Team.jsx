@@ -7,7 +7,6 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import { SiProbot } from "react-icons/si";
-import Footer from './Footer.jsx'
 import './Team.css'
 
 
@@ -110,7 +109,6 @@ const Team = () => {
           ))}
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

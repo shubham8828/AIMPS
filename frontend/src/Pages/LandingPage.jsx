@@ -8,7 +8,6 @@ const Section5 = lazy(() => import("../Component/Section/Section5"));
 const Section6 = lazy(() => import("../Component/Section/Section6"));
 const Section7 = lazy(() => import("../Component/Section/Section7"));
 import './LandingPage.css'
-import Footer from './Footer.jsx'
 
 const LandingPage = () => {
   return (
@@ -37,8 +36,6 @@ const LandingPage = () => {
             <Section7 />
           </Suspense>
         </div>
-        <Footer />
-
       </div>
       
   );

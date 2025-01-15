@@ -10,13 +10,13 @@
   
   .chart-title {
     text-align: center;
-    font-size: 1.8rem;
+    font-size:1.1rem;
     color: #444;
     margin-bottom: 20px;
   }
   
   .chart-wrapper {
-    width: 80%;
+    width: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -26,7 +26,7 @@
   
   .chart-box {
     width: 40%;
-    min-width: 300px; /* Ensure charts have a minimum width */
+    min-width: 250px; /* Ensure charts have a minimum width */
     height: auto;
     padding: 20px;
     background: #f9f9f9;
@@ -54,12 +54,10 @@
   }
   
   @media (max-width: 480px) {
-    .chart-title {
-      font-size: 1.5rem;
-    }
-  
+    
+
     .chart-box h3 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
   

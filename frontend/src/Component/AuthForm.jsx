@@ -6,7 +6,6 @@ import ImageCompressor from "image-compressor.js"; // For image compression
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "./AuthForm.css";
-import Footer from "../Pages/Footer.jsx";
 
 const AuthForm = ({ setToken }) => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register forms
@@ -323,7 +322,6 @@ const AuthForm = ({ setToken }) => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

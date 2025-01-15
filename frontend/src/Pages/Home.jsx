@@ -10,7 +10,6 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import Spinner from "../Component/Spinner.jsx";
 import { FaCloudDownloadAlt } from "react-icons/fa";
-import Footer from "./Footer.jsx";
 
 const Home = () => {
   const [isAdmin, setIsAdmin] = useState(false); // Start with `null` instead of an empty object
@@ -105,11 +104,11 @@ const Home = () => {
           <Cards isAdmin={isAdmin} />
           {isAdmin && (
             <>
-              {/* <LineChart />
-              <PieChart /> */}
+              <LineChart />
+              <PieChart /> 
             </>
           )}
-          {/* <Chart /> */}
+          <Chart />
         </div>
       </Suspense>
       <button
@@ -119,7 +118,6 @@ const Home = () => {
       >
         <FaCloudDownloadAlt />
       </button>
-      <Footer />
     </div>
   );
 };

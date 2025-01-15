@@ -127,8 +127,8 @@
 
 }
 
+
 @media (max-width: 768px) {
-  
   .payment-search-bar-group{
     flex-direction: column;
   }
