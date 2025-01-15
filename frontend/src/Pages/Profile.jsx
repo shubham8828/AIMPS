@@ -3,9 +3,13 @@ import axios from "axios";
 import ImageCompressor from "image-compressor.js"; // For image compression
 import toast from "react-hot-toast";
 import "./Profile.css";
+import Spinner from "../Component/Spinner";
+
 const Profile = () => {
   const [user, setUser] = useState(null); // Store user data
   const [formData, setFormData] = useState({}); // Store form data
+  const [loading, setLoading] = useState(false);
+
   const imageRef = useRef();
 
   const token = localStorage.getItem("token");
@@ -15,15 +19,20 @@ const Profile = () => {
 
   useEffect(() => {
     // Fetch user data
+
     const fetchUserData = async () => {
+      setLoading(true);
       try {
         const res = await axios.get("http://localhost:4000/api/user", {
           headers,
         });
+
         setUser(res.data.user);
         setFormData(res.data.user);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -61,6 +70,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.put("http://localhost:4000/api/update", formData, {
         headers,
@@ -68,6 +78,8 @@ const Profile = () => {
       toast.success("Profile updated successfully", { position: "top-center" });
     } catch (error) {
       toast.error("Failed to update profile", { position: "top-center" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,10 +88,13 @@ const Profile = () => {
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   const isAdminOrRoot = user.role === "root" || user.role === "admin";
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="main-container">

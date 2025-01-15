@@ -72,12 +72,17 @@
 
 .payment-table-container {
   overflow-x: auto;
+  max-height: 75vh;
+  overflow-y: scroll;
+
+
 }
 
 .payment-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+
 }
 
 .payment-table th,

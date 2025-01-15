@@ -1,4 +1,4 @@
-import Invoice from "../model/InvoiceSchema.js"; // Ensure the correct path to your Invoice model
+import Invoice from "../model/InvoiceSchema.js"; 
 import User from "../model/User.js";
 import Message from "../model/Message.js";
 import bcrypt from "bcrypt"; // To hash the password
@@ -9,7 +9,6 @@ import jwt from "jsonwebtoken";
 
 export const newInvoive = async (req, res) => {
   try {
-    // Extract bill data from the request body
     const { to, phone, address, products, total} = req.body;
     const email=req.user.email;
     const newInvoice = new Invoice({
@@ -26,7 +25,6 @@ export const newInvoive = async (req, res) => {
       .json({ msg: "Invoice created successfully", invoice: newInvoice });
 
   } catch (error) {
-    // Handle errors and send an error response
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
@@ -41,7 +39,6 @@ export const invoices = async (req, res) => {
 
       invoices = await Invoice.find();
     } else {
-      // Return only the invoices for the current user's email
       invoices = await Invoice.find({ email });
     }
     const user=req.user
@@ -83,15 +80,13 @@ export const deleteInvoice = async (req, res) => {
 // Update the invoice
 
 export const updateInvoice = async (req, res) => {
-  // Extract `id` and other updated data from `req.body`
   const { id, ...updatedInvoiceData } = req.body;
 
   try {
-    // Update the invoice in the database
     const updatedInvoice = await Invoice.findByIdAndUpdate(
       id,
-      updatedInvoiceData, // Pass the rest of the data to update the document
-      { new: true } // Return the updated document
+      updatedInvoiceData, 
+      { new: true } 
     );
 
     if (!updatedInvoice) {
@@ -118,16 +113,12 @@ export const searchCustomer = async (req, res) => {
   try {
     const { query, email } = req.body;
 
-    // Check if userEmail is provided
     if (!email) {
       return res.status(400).json({ msg: "Missing user email" });
     }
 
-    // Fetch all invoices for the user
     const invoices = await Invoice.find({ email });
-    // console.log("All invoices:", invoices); // Log invoices for debugging
 
-    // If no invoices are found, return an empty object
     if (!invoices.length) {
       return res.status(200).json({ invoices: [] });
     }
@@ -145,9 +136,8 @@ export const searchCustomer = async (req, res) => {
       return res.status(200).json({ invoices: selectedFields });
     }
 
-    const searchRegex = new RegExp(query, "i"); // Create a case-insensitive regex
+    const searchRegex = new RegExp(query, "i"); 
 
-    // Filter invoices based on the search query and select only required fields
     const filteredInvoices = invoices
       .filter((invoice) => {
         return (
@@ -159,7 +149,6 @@ export const searchCustomer = async (req, res) => {
         );
       })
       .map((invoice) => ({
-        // Map to return only the required fields
         invoiceId: invoice.invoiceId,
         to: invoice.to,
         phone: invoice.phone,
@@ -168,10 +157,6 @@ export const searchCustomer = async (req, res) => {
         total: invoice.total,
         date: invoice.date,
       }));
-
-    // console.log("Filtered invoices:", filteredInvoices); // Log filtered results for debugging
-
-    // Return filtered invoices wrapped in an object
     res
       .status(200)
       .json({ invoices: filteredInvoices.length > 0 ? filteredInvoices : [] });
@@ -180,10 +165,8 @@ export const searchCustomer = async (req, res) => {
     res.status(500).json({ msg: "Internal Server Error" });
   }
 };
-
-
 export const register = async (req, res) => {
-  const { email, name, address, password, image, phone, shopname ,role} = req.body;
+  const { email, name, address, password, image, phone, shopname, role } = req.body;
 
   try {
     const existUser = await User.findOne({ email });
@@ -192,32 +175,47 @@ export const register = async (req, res) => {
       return res.status(400).json({ msg: "User already registered" });
     }
 
-    // Ensure the address object is structured correctly
     const formattedAddress = {
-      localArea: address.localArea || '',
-      city: address.city || '',
-      state: address.state || '',
-      country: address.country || '',
-      pin: address.pin || '',
+      localArea: address.localArea || "",
+      city: address.city || "",
+      state: address.state || "",
+      country: address.country || "",
+      pin: address.pin || "",
     };
 
-    // Uploading image to Cloudinary
-    const uploadResult = await cloudinary.uploader.upload(image, {
-      upload_preset: "eeeghag0",
-      public_id: `${email}_avatar`,
-      allowed_formats: ["png", "jpg", "jpeg", "svg"],
-    });
+    let imageUrl = "";
 
-    // Check for upload result
-    if (!uploadResult || !uploadResult.secure_url) {
-      return res.status(500).json({ msg: "Image upload failed" });
+    if (image) {
+      const base64Length = image.length * (3 / 4); // Approximate size in bytes
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+
+      if (base64Length > maxSizeInBytes) {
+        return res.status(413).json({ msg: "Image size exceeds the 5 MB limit. Please upload a smaller image." });
+      }
+
+      try {
+        const uploadResult = await cloudinary.uploader.upload(image, {
+          upload_preset: "eeeghag0",
+          public_id: `${email}_avatar`,
+          allowed_formats: ["png", "jpg", "jpeg", "svg"],
+        });
+
+        if (uploadResult && uploadResult.secure_url) {
+          // Fetch optimized URL if needed
+          imageUrl = cloudinary.url(uploadResult.public_id, {
+            fetch_format: "auto",
+            quality: "auto",
+          });
+        } else {
+          return res.status(500).json({ msg: "Image upload failed. Please try again." });
+        }
+      } catch (uploadError) {
+        console.error("Error uploading image to Cloudinary:", uploadError);
+        return res.status(500).json({
+          msg: "Failed to upload image. Ensure the image is valid and try again.",
+        });
+      }
     }
-
-    // Fetch optimized URL (if needed)
-    const optimizeUrl = cloudinary.url(uploadResult.public_id, {
-      fetch_format: "auto",
-      quality: "auto",
-    });
 
     // Hash the password
     const salt = await bcrypt.genSalt(10);
@@ -228,11 +226,11 @@ export const register = async (req, res) => {
       email,
       name,
       phone,
-      address: formattedAddress, // Save the formatted address object
+      address: formattedAddress,
       shopname,
-      password: hashedPassword, // Store the hashed password
-      image: optimizeUrl, // Store the optimized URL or use uploadResult.secure_url
-      role
+      password: hashedPassword,
+      image: imageUrl, // Store the Cloudinary image URL or empty string if no image provided
+      role,
     });
 
     await newUser.save();
@@ -247,7 +245,7 @@ export const register = async (req, res) => {
         address: newUser.address,
         image: newUser.image,
         shopname: newUser.shopname,
-        role:newUser.role
+        role: newUser.role,
       },
       process.env.JWT_SECRET, // Use your secret key from environment variables
       { expiresIn: "30d" } // Set token expiry to 30 days
@@ -260,7 +258,7 @@ export const register = async (req, res) => {
       user: newUser,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error during registration:", error);
     res.status(500).json({ msg: "Internal Server Error" });
   }
 };
@@ -319,23 +317,17 @@ export const login = async (req, res) => {
 // Update API For User
 export const update = async (req, res) => {
   try {
-    const id = req.body._id; // User ID from the body
-    const { email, name, address, image } = req.body;
-
-    // Find the user by ID
-    const user = await User.findById(id);
-
+    const { email, name, address, image,phone,shopname } = req.body;
+    const user = await User.findOne({email:req.user.email});
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
-
-    // Update individual user fields
     if (email) user.email = email;
     if (name) user.name = name;
-
+    if (phone) user.phone = phone;
+    if (shopname) user.shopname = shopname;
     if (address) {
       const { city, state, pin, localArea, country } = address;
-
       if (city) user.address.city = city;
       if (state) user.address.state = state;
       if (pin) user.address.pin = pin;
@@ -344,11 +336,9 @@ export const update = async (req, res) => {
     }
 
     if (image) {
-      // Check if the image is already a URL
       const isAlreadyUploaded = image.startsWith("http");
 
       if (!isAlreadyUploaded) {
-        // Upload new image to Cloudinary
         const uploadResult = await cloudinary.uploader.upload(image, {
           upload_preset: "eeeghag0",
           public_id: `${email}_avatar`,
@@ -356,22 +346,17 @@ export const update = async (req, res) => {
           allowed_formats: ["png", "jpg", "jpeg", "svg"],
         });
 
-        // Check if the upload was successful and set the secure_url to user.image
         if (!uploadResult || !uploadResult.secure_url) {
           return res.status(500).json({ msg: "Image upload failed" });
         }
 
-        user.image = uploadResult.secure_url; // Save the secure_url directly
+        user.image = uploadResult.secure_url;
       } else {
-        // Use the existing uploaded image URL
         user.image = image;
       }
     }
 
-    // Save the updated user
     await user.save();
-
-    // Return success response with updated user data
     return res.status(200).json({ msg: "User updated successfully", user });
   } catch (error) {
     console.error(error);

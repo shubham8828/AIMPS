@@ -3,16 +3,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FaArrowLeft, FaArrowRight, FaTrashAlt, FaEye } from "react-icons/fa";
-import Download from "../asset/download.png";
 import * as XLSX from "xlsx";
+import Spinner from "../Component/Spinner";
+import { FaCloudDownloadAlt } from "react-icons/fa";
+
 import "./Invoices.css";
 const Invoices = () => {
   const [allInvoices, setAllInvoices] = useState([]); // Holds all invoices
   const [filteredInvoices, setFilteredInvoices] = useState([]); // Holds filtered invoices
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [invoice, setInvoice] = useState();
-  const [user, setUser] = useState(null); // Holds user data
+  const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const itemsPerPage = 50;
 
@@ -21,29 +24,23 @@ const Invoices = () => {
     Authorization: `Bearer ${token}`,
   };
 
-  // Fetch all invoices once from the backend
   const fetchInvoices = async () => {
+    setLoading(true);
     try {
-      // Fetch data from the API
       const response = await axios.get("http://localhost:4000/api/invoices", {
         headers,
       });
-
-      // Destructure user and invoices from the response data
       const { invoices, user } = response.data;
-
-      // Set state for user and invoices
       setUser(user);
-      setInvoice(invoices);
-
-      // Sort invoices in LIFO order (most recent first)
       const sortedInvoices = invoices.reverse();
-
-      // Update state for allInvoices and filteredInvoices
       setAllInvoices(sortedInvoices);
       setFilteredInvoices(sortedInvoices); // Initially set filtered invoices to all invoices
     } catch (error) {
       console.error("Error fetching invoices:", error);
+    }
+    finally{
+      setLoading(false);
+
     }
   };
 
@@ -53,8 +50,9 @@ const Invoices = () => {
 
   // Handle invoice deletion
   const deleteInvoice = async (id) => {
+    setLoading(true);
+
     try {
-      // Sending `id` as a URL parameter
       await axios
         .delete(`http://localhost:4000/api/delete/${id}`, { headers })
         .then((res) => {
@@ -67,18 +65,18 @@ const Invoices = () => {
     } catch (error) {
       toast.error("Internal Server Error", { position: "top-center" });
     }
+    setLoading(false)
+
   };
 
-  // Filter invoices by name based on the search term
   useEffect(() => {
     const results = allInvoices.filter((invoice) =>
       invoice.to.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredInvoices(results);
-    setCurrentPage(1); // Reset to first page when search term changes
+    setCurrentPage(1); 
   }, [searchTerm, allInvoices]);
 
-  // Pagination: Get current page invoices
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentInvoices = filteredInvoices.slice(
     startIndex,
@@ -86,24 +84,19 @@ const Invoices = () => {
   );
   const totalPages = Math.ceil(filteredInvoices.length / itemsPerPage);
 
-  // Handle next page click
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage((prevPage) => prevPage + 1);
   };
-
-  // Handle previous page click
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  // Download customer and product data in Excel format
   const downloadCustomerData = (invoices) => {
     if (!Array.isArray(invoices) || invoices.length === 0) {
       console.error("No invoices found.");
       return;
     }
-
-    // Extract customer details
+    setLoading(true)
     const customerData = invoices.map((invoice) => ({
       "Invoice ID": invoice.invoiceId || "N/A",
       Name: invoice.to || "N/A",
@@ -114,7 +107,6 @@ const Invoices = () => {
       Total: invoice.total || 0,
     }));
 
-    // Extract product details from all invoices
     const productData = invoices.flatMap((invoice, index) =>
       (invoice.products || []).map((product, productIndex) => ({
         Product_id: index + 1,
@@ -126,21 +118,18 @@ const Invoices = () => {
       }))
     );
 
-    // Create a new workbook
     const wb = XLSX.utils.book_new();
-
-    // Convert customer and product data to worksheets
     const customerSheet = XLSX.utils.json_to_sheet(customerData);
     const productSheet = XLSX.utils.json_to_sheet(productData);
-
-    // Append sheets to the workbook
     XLSX.utils.book_append_sheet(wb, customerSheet, "Customer Info");
     XLSX.utils.book_append_sheet(wb, productSheet, "Product Info");
-
-    // Generate Excel file and trigger download
-    XLSX.writeFile(wb, `Customer_Data.xlsx`);
+    XLSX.writeFile(wb, `Invoice-Data.xlsx`);
+    setLoading(false)
   };
 
+  if(loading){
+    return <Spinner />
+  }
   return (
     <div className="main-container">
       <div className="invoice-container">
@@ -237,16 +226,8 @@ const Invoices = () => {
                 </button>
               </div>
             )}
-            {/* <button
-            className="report-download-btn"
-            onClick={() => downloadCustomerData(invoice)}
-          >
-            <img
-              src={Download}
-              className="report-download-btn-icon"
-              alt="Download Report"
-            />
-          </button> */}
+            <button className="download-btn" title="click to download invoice data" onClick={() => downloadCustomerData(filteredInvoices)}> <FaCloudDownloadAlt /></button>
+
           </>
         )}
       </div>

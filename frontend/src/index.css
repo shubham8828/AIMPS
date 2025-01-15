@@ -21,5 +21,14 @@ body{
   align-items: center;
 }
 
-
+.download-btn{
+  height: 50px;
+  font-size: 50px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: fixed;
+  bottom: 50vh;
+  right: 1vw;
+}
  

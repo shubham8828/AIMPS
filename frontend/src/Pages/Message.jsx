@@ -3,6 +3,8 @@ import axios from "axios";
 import { FaPaperPlane } from "react-icons/fa";
 import "./Message.css";
 
+import Spinner from "../Component/Spinner";
+
 const Message = () => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
@@ -10,6 +12,7 @@ const Message = () => {
   const [newMessage, setNewMessage] = useState("");
   const [showAdmin, setShowAdmin] = useState(true); // State to toggle between Admins and Users
   const [currUser, setCurrUser] = useState(null); // Current logged-in user
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token"); // Retrieve the token from localStorage
   const headers = {
@@ -27,6 +30,7 @@ const Message = () => {
   }, [selectedUser, users]);
 
   const fetchData = async () => {
+    setLoading(true)
     try {
       const usersResponse = await axios.get("http://localhost:4000/api/users", {
         headers,
@@ -36,6 +40,7 @@ const Message = () => {
     } catch (error) {
       console.error("Error fetching users:", error.message);
     } finally {
+      setLoading(false)
     }
   };
 
@@ -100,6 +105,10 @@ const Message = () => {
         console.error("Error sending message:", error.message);
       });
   };
+
+  if(loading){
+    return <Spinner />
+  }
 
   return (
     <div className="chat-container">

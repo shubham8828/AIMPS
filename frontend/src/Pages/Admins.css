@@ -5,8 +5,6 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
-  position: absolute;
-  top: 15px;
 }
 
 .addAdmin-btn {
@@ -45,6 +43,12 @@
 
 .admin-table-container {
   overflow-x: auto;
+  overflow-y: scroll;
+  height: auto;
+  max-height: 75vh;
+}
+.admin-table-container::-webkit-scrollbar{
+  display: none;
 }
 
 .admin-table {
@@ -111,7 +115,6 @@
   background: rgb(155, 3, 3);
 }
 
-/* Combined Media Queries */
 @media (max-width: 768px) {
   .admin-container {
     width: 90%;

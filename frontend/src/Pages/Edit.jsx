@@ -2,8 +2,9 @@ import React, {useState, useRef } from 'react';
 import axios from 'axios';
 import ImageCompressor from 'image-compressor.js'; // For image compression
 import toast from 'react-hot-toast';
-import { ImSpinner3 } from "react-icons/im";
-import { useLocation } from 'react-router-dom';
+import Spinner from "../Component/Spinner";
+import { useLocation ,useNavigate} from 'react-router-dom';
+
 import './Profile.css'
 const Profile = () => {
   const location=useLocation();
@@ -12,6 +13,8 @@ const Profile = () => {
   const [formData, setFormData] = useState(location.state||{}); // Store form data
   const imageRef = useRef(); 
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate();
+
   const token = localStorage.getItem('token');
   const headers = {
     'Authorization': `Bearer ${token}`,
@@ -53,11 +56,14 @@ const Profile = () => {
     setLoading(true);
     try {
       await axios.put('http://localhost:4000/api/update', formData, { headers });
-      setLoading(false);
       toast.success('Profile updated successfully', { position: 'top-center' });
+      
     } catch (error) {
-      setLoading(false);
       toast.error('Failed to update profile', { position: 'top-center' });
+    }
+    finally{
+      setLoading(false);
+      navigate('/admins')
     }
   };
 
@@ -65,8 +71,8 @@ const Profile = () => {
     imageRef.current.click();
   };
 
-  if (!user) {
-    return <div>Loading...</div>;
+  if (!user || loading) {
+    return <Spinner />;
   }
 
   const isAdminOrRoot = user.role === 'root' || user.role === 'admin';

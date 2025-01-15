@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
-import Download from "../asset/download.png";
+import Spinner from "../Component/Spinner";
+
 import "./PaymentList.css";
 const PaymentList = () => {
   const [paymentData, setPaymentData] = useState([]);
@@ -13,6 +14,7 @@ const PaymentList = () => {
   const [itemsPerPage] = useState(50); // Number of items per page
   const [searchTerm, setSearchTerm] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(""); // New state for payment status filter
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const PaymentList = () => {
 
   useEffect(() => {
     const fetchPaymentData = async () => {
+      setLoading(true);
       try {
         const response = await axios.post(
           "http://localhost:4000/api/payment-data",
@@ -35,6 +38,7 @@ const PaymentList = () => {
       } catch (error) {
         console.error("Error fetching payment data:", error);
       } finally {
+        setLoading(false);
       }
     };
 
@@ -76,6 +80,7 @@ const PaymentList = () => {
     if (paymentStatus === "Successful") {
       toast.success("Payment Already Done");
     } else if (paymentStatus === "Pending") {
+      setLoading(true)
       await axios
         .post(
           "http://localhost:4000/api/getInvoice",
@@ -83,6 +88,7 @@ const PaymentList = () => {
           { headers }
         )
         .then((response) => {
+          setLoading(false)
           navigate("/payments", { state: response.data.invoice });
         })
         .catch((err) => {
@@ -117,6 +123,11 @@ const PaymentList = () => {
     XLSX.writeFile(wb, "Payment_Data.xlsx");
   };
 
+  if(loading)
+  {
+    return <Spinner />
+  }
+
   return (
     <div className="main-container">
       <div className="payment-list-container">
@@ -147,7 +158,10 @@ const PaymentList = () => {
 
         <div className="payment-table-container">
           {filteredData.length === 0 ? (
-            <div className="no-payment-data"> <p>No Payment Data Available</p></div>
+            <div className="no-payment-data">
+              {" "}
+              <p>No Payment Data Available</p>
+            </div>
           ) : (
             <table className="payment-table">
               <thead>

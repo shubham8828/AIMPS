@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import toast from "react-hot-toast";
 import "./Admins.css";
 import Spinner from "../Component/Spinner";
+
 const Admins = () => {
   const [Users, setUsers] = useState([]); // Initialize with an empty array
   const [currUser, setCurrUser] = useState(null); // Current logged-in user (initialize with null)
@@ -165,6 +166,7 @@ const Admins = () => {
           </div>
         )}
       </div>
+
     </div>
   );
 };

@@ -3,19 +3,21 @@ import axios from "axios";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Users.css"; // External CSS
+import Spinner from "../Component/Spinner";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUsers();
-    fetchUserRole();
   }, []);
 
   const fetchUsers = async () => {
+    setLoading(true)
     try {
       const token = localStorage.getItem("token");
       const headers = {
@@ -29,29 +31,18 @@ const Users = () => {
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  };
-
-  const fetchUserRole = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const response = await axios.get("http://localhost:4000/api/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUserRole(response.data.role);
-      }
-    } catch (error) {
-      console.error("Error fetching user role:", error);
+    finally{
+      setLoading(false)
     }
   };
+
 
   const handleEdit = (user) => {
     navigate("/user/edit", { state: user });
   };
 
   const handleDelete = async (id) => {
+    setLoading(true)
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -67,6 +58,9 @@ const Users = () => {
       setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -84,6 +78,11 @@ const Users = () => {
         (users.indexOf(user) + 1).toString().includes(query))
     );
   });
+
+  if(loading)
+  {
+    return <Spinner />
+  }
 
   return (
     <div className="main-container">

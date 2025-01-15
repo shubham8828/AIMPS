@@ -77,12 +77,16 @@
  
   .invoice-table-container {
     overflow-x: auto;
+    overflow-y: scroll;
+    max-height: 75vh;
+
   }
   
   .invoice-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+
   }
   
   .invoice-table th,
