@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
+import defaultProfile from "../asset/logo.png"; // Replace with the path to your default profile image
 import axios from "axios";
 import ImageCompressor from "image-compressor.js"; // For image compression
 import toast from "react-hot-toast";
-import "./Profile.css";
-import Spinner from "../Component/Spinner";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Component/Spinner.jsx";
+import "../Component/AuthForm.css";
 
 const statesOfIndia = [
   "Andhra Pradesh",
@@ -44,39 +46,29 @@ const statesOfIndia = [
   "Puducherry",
 ];
 
-const Profile = () => {
-  const [user, setUser] = useState(null); // Store user data
-  const [formData, setFormData] = useState({}); // Store form data
+const roles = ["user", "admin", "root"];
+
+const AddAdmin = () => {
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    shopname: "",
+    email: "",
+    phone: "",
+    password: "",
+    image: "",
+    address: {
+      localArea: "",
+      city: "",
+      state: "",
+      country: "", // Fixed to India
+      pin: "",
+    },
+    role: "",
+  });
 
+  const navigate = useNavigate();
   const imageRef = useRef();
-
-  const token = localStorage.getItem("token");
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
-  useEffect(() => {
-    // Fetch user data
-
-    const fetchUserData = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("http://localhost:4000/api/user", {
-          headers,
-        });
-
-        setUser(res.data.user);
-        setFormData(res.data.user);
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -91,32 +83,65 @@ const Profile = () => {
           fileReader.readAsDataURL(compressedResult);
         },
         error(e) {
-          console.error(e.message);
+          console.log(e.message);
         },
       });
+    } else if (name.startsWith("address.")) {
+      const addressField = name.split(".")[1];
+      setFormData({
+        ...formData,
+        address: { ...formData.address, [addressField]: value },
+      });
     } else {
-      const keys = name.split(".");
-      if (keys.length > 1) {
-        setFormData({
-          ...formData,
-          [keys[0]]: { ...formData[keys[0]], [keys[1]]: value },
-        });
-      } else {
-        setFormData({ ...formData, [name]: value });
-      }
+      setFormData({ ...formData, [name]: value });
     }
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData);
+
     e.preventDefault();
     setLoading(true);
+
+    const payload = {
+      ...formData,
+      shopname: formData.shopname || "AIMPS",
+      address: {
+        ...formData.address,
+        localArea: formData.address.localArea,
+        city: formData.address.city,
+        state: formData.address.state,
+        country: formData.address.country,
+        pin: formData.address.pin,
+      },
+    };
+    console.log(payload);
+
     try {
-      await axios.put("http://localhost:4000/api/update", formData, {
-        headers,
+      const url = "http://localhost:4000/api/register";
+      await axios.post(url, payload);
+      toast.success("Admin Added Successfully", { position: "top-center" });
+      setFormData({
+        name: "",
+        shopname: "",
+        email: "",
+        phone: "",
+        password: "",
+        image: "",
+        address: {
+          localArea: "",
+          city: "",
+          state: "",
+          country: "",
+          pin: "",
+        },
+        role: "",
       });
-      toast.success("Profile updated successfully", { position: "top-center" });
+      navigate("/admins");
     } catch (error) {
-      toast.error("Failed to update profile", { position: "top-center" });
+      toast.error(error.response?.data?.msg || "An error occurred", {
+        position: "top-center",
+      });
     } finally {
       setLoading(false);
     }
@@ -126,19 +151,15 @@ const Profile = () => {
     imageRef.current.click();
   };
 
-  if (!user) {
-    return <Spinner />;
-  }
-
   if (loading) {
     return <Spinner />;
   }
 
   return (
     <div className="main-container">
-      <div className="profile-container">
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}> Profile</h2>
-        <form className="profile-form" onSubmit={handleSubmit}>
+      <div className="auth-container">
+        <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Add User </h2>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <p style={{ textAlign: "center" }}>Profile Image</p>
             <div className="profile-image">
@@ -173,9 +194,8 @@ const Profile = () => {
               required
               minLength={3}
               maxLength={50}
-              autoComplete="name"
+              autoComplete="on"
               placeholder="Enter your name"
-              style={{textTransform:'capitalize'}}
             />
           </div>
 
@@ -188,11 +208,9 @@ const Profile = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              autoComplete="on"
+              autoComplete="email"
               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               placeholder="Enter your email"
-              readOnly
-
             />
           </div>
 
@@ -213,16 +231,45 @@ const Profile = () => {
               pattern="[0-9]{10}"
               placeholder="Enter 10-digit mobile number"
               maxLength={10}
-              autoComplete="on"
+              autoComplete="tel"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength={8}
+              maxLength={20}
+              autoComplete="current-password"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+              title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)."
+              placeholder="Enter a strong password"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="role">Role</label>
-            <input type="text" value={formData.role} readOnly 
-              style={{textTransform:'capitalize'}} id="role" name="role"/>
+            <select
+              name="role"
+              id="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              {roles.map((role) => (
+                <option key={role} value={role}>
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </option>
+              ))}
+            </select>
           </div>
-          {formData.user === "user" && (
+
+          {formData.role === "user" && (
             <div className="form-group">
               <label htmlFor="shopname">Shop Name</label>
               <input
@@ -237,9 +284,7 @@ const Profile = () => {
                 required
                 minLength={3}
                 maxLength={50}
-                autoComplete="on"
-              style={{textTransform:'capitalize'}}
-
+                autoComplete="organization"
               />
             </div>
           )}
@@ -259,8 +304,7 @@ const Profile = () => {
                 });
               }}
               required
-              style={{textTransform:'capitalize'}}
-              autoComplete="on"
+              autoComplete="street-address"
             />
           </div>
 
@@ -279,21 +323,20 @@ const Profile = () => {
                 });
               }}
               required
-              style={{textTransform:'capitalize'}}
-              autoComplete="on"
+              autoComplete="address-level2"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="state">State</label>
             <select
-              name="address.state"
+              name="state"
               id="state"
               value={formData.address.state}
               onChange={handleChange}
               required
             >
-              <option value={formData ?formData.address.state :""}> {formData ?formData.address.state :"Select State"}</option>
+              <option value="">Select State</option>
               {statesOfIndia.map((state) => (
                 <option key={state} value={state}>
                   {state}
@@ -312,8 +355,7 @@ const Profile = () => {
               required
               autoComplete="country"
             >
-              <option value={formData ?formData.address.country :"India"}>{formData ?formData.address.country :"India"}</option>
-              <option value={"India"}>{"India"}</option>
+              <option value="India">India</option>
             </select>
           </div>
           <div className="form-group">
@@ -342,14 +384,15 @@ const Profile = () => {
               autoComplete="postal-code" // Suggest browser autocomplete for postal codes
             />
           </div>
-
-          <button type="submit" className="submit-btn">
-            Update Profile
-          </button>
         </form>
+        <div className="form-group">
+          <button type="submit" className="addAdmin">
+            Add User
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default AddAdmin;

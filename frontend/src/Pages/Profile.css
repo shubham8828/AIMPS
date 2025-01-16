@@ -31,7 +31,7 @@
     /* Darker text color for readability */
   }
   
-  .form-group input {
+  .form-group input,select {
     padding: 12px;
     width: 100%;
     border-radius: 6px;

@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"; // To hash the password
 import cloudinary from "../cloudinary.js";
 import Payment from "../model/payment.js";
 import jwt from "jsonwebtoken";
-import { validateUser } from "../Middleware/UserValidater.js";
+import { validateUser ,updateUserValidater } from "../Middleware/UserValidater.js";
 
 
 
@@ -177,9 +177,9 @@ export const login = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { email, name, address, image, phone, shopname } = req.body;
+  
+    const { email, name, address, image, phone, shopname,role} = req.body;
 
-    // Validate email in the request
     if (!email) {
       return res.status(400).json({ msg: "Email is required to update user details" });
     }
@@ -194,6 +194,7 @@ export const update = async (req, res) => {
     if (name) user.name = name;
     if (phone) user.phone = phone;
     if (shopname) user.shopname = shopname;
+    if (role) user.role = role;
 
     // Update address if provided
     if (address && typeof address === "object") {

@@ -170,8 +170,7 @@ const Message = () => {
                 alt=""
               />
               <h3>
-                {users.find((user) => user._id === selectedUser)?.name}(
-                {users.find((user) => user._id === selectedUser)?.role})
+                {users.find((user) => user._id === selectedUser)?.name.split(' ')[0]}
               </h3>
             </div>
             <div className="messages">

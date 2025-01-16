@@ -92,7 +92,8 @@ const Users = () => {
           <input
             type="text"
             placeholder="Search by Name, Email, City, State, etc."
-            value={searchQuery}
+            value={searchQuery}                
+            id='search'
             onChange={(e) => setSearchQuery(e.target.value)}
             className="users-search-bar"
           />
@@ -112,7 +113,7 @@ const Users = () => {
                   <th>State</th>
                   <th>Country</th>
                   <th>Local Area</th>
-                  <th>Pin</th>
+                  <th>Pin Code</th>
                   <th>Actions</th>
                 </tr>
               </thead>

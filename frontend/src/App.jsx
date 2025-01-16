@@ -18,9 +18,9 @@ const PaymentList = React.lazy(() => import("./Pages/PaymentList.jsx"));
 const Message = React.lazy(() => import("./Pages/Message.jsx"));
 const Users = React.lazy(() => import("./Pages/Users.jsx"));
 const Admins = React.lazy(() => import("./Pages/Admins.jsx"));
-const AddAdmin = React.lazy(() => import("./Component/AddAdmin.jsx"));
+const AddUser = React.lazy(() => import("./Pages/AddUser.jsx"));
 const Team = React.lazy(() => import("./Pages/Team.jsx"));
-const Edit = React.lazy(() => import("./Pages/Edit.jsx"));
+const EditUser = React.lazy(() => import("./Pages/EditUser.jsx"));
 
 const App = () => {
 
@@ -67,14 +67,13 @@ const PrivateRoute = ({ children, allowedRoles }) => {
             <Route path="/team" element={<Team />} />
             <Route path="/login" element={<AuthForm setToken={setToken} />} />
             <Route path="/register" element={<AuthForm setToken={setToken} />} />
-
             <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/invoices" element={<PrivateRoute><Invoices /></PrivateRoute>} />
             <Route path="/users" element={<PrivateRoute allowedRoles={["admin", "root"]}><Users /></PrivateRoute>} />
             <Route path="/admins" element={<PrivateRoute allowedRoles={["admin", "root"]}><Admins /></PrivateRoute>} />
-            <Route path="/admin/add" element={<PrivateRoute allowedRoles={["root"]}><AddAdmin /></PrivateRoute>} />
-            <Route path="/admin/edit" element={<PrivateRoute allowedRoles={["admin", "root"]}><Edit /></PrivateRoute>} />
-            <Route path="/user/edit" element={<PrivateRoute allowedRoles={["admin", "root"]}><Edit /></PrivateRoute>} />
+            <Route path="/adduser" element={<PrivateRoute allowedRoles={["root"]}><AddUser/></PrivateRoute>} />
+            <Route path="/admin/edit" element={<PrivateRoute allowedRoles={["root"]}><EditUser /></PrivateRoute>} />
+            <Route path="/user/edit" element={<PrivateRoute allowedRoles={["admin", "root"]}><EditUser /></PrivateRoute>} />
             <Route path="/new-invoice" element={<PrivateRoute><NewInvoices /></PrivateRoute>} />
             <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/invoice-details" element={<PrivateRoute><InvoiceDetails /></PrivateRoute>} />

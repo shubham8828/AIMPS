@@ -155,6 +155,7 @@ const Invoices = () => {
                 type="text"
                 placeholder="Search by Customer Name"
                 value={searchTerm}
+                id='search'
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="invoice-search-bar"
               />

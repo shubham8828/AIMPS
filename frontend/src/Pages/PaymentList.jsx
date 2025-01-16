@@ -139,12 +139,14 @@ const PaymentList = () => {
               placeholder="Search by Customer Name, Invoice ID, Phone, or Payment Method"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              id='search'
               className="payment-search-bar"
             />
             <select
               className="payment-status-filter"
               value={paymentStatus}
               onChange={(e) => setPaymentStatus(e.target.value)}
+              id="filter"
             >
               <option value="">All Statuses</option>
               <option value="Pending">Pending</option>
@@ -225,6 +227,7 @@ const PaymentList = () => {
                               : "green",
                           color: "white",
                         }}
+                        className="payment-btn"
                       >
                         {transaction.paymentStatus === "Pending"
                           ? "Pay"

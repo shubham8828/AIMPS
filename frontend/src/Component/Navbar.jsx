@@ -11,6 +11,8 @@ import {
   FaUsers,
   FaComments,
 } from "react-icons/fa";
+import { RiUserAddFill,RiTeamLine ,RiAdminFill} from "react-icons/ri";
+
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -32,10 +34,11 @@ const Navbar = ({ children, setToken }) => {
     { path: "/new-invoice", name: "New Invoice", icon: <FaFileInvoiceDollar /> },
     { path: "/users", name: "Users", icon: <FaUsers /> },
     { path: "/payment-details", name: "Payments", icon: <FaMoneyCheckAlt /> },
-    { path: "/admins", name: "Admins", icon: <FaUsers /> },
+    { path: "/admins", name: "Admins", icon: <RiAdminFill/> },
+    { path: "/adduser", name: "Add User", icon: <RiUserAddFill /> },
     { path: "/profile", name: "Settings", icon: <FaCog /> },
     { path: "/message", name: "Message", icon: <FaComments /> },
-    { path: "/team", name: "My Team", icon: <FaUsers /> },
+    { path: "/team", name: "My Team", icon: <RiTeamLine /> },
     { path: "/login", name: "Login", icon: <FaUserAlt /> },
   ];
 
@@ -75,13 +78,16 @@ const Navbar = ({ children, setToken }) => {
 
   const filteredMenu = menuItem.filter(item => {
     if (!token) {
-      return !["/dashboard", "/invoices", "/new-invoice", "/profile", "/message", "/payment-details", "/users", "/admins"].includes(item.path);
+      return !["/dashboard", "/invoices", "/new-invoice", "/profile", "/message", "/payment-details", "/users", "/admins","/adduser"].includes(item.path);
     }
-    if (user?.role === "root" || user?.role === "admin") {
+    if (user?.role === "root") {
       return !["/contact", "/login", "/new-invoice"].includes(item.path);
     }
+    if (user?.role === "admin") {
+      return !["/contact", "/login", "/new-invoice","/adduser"].includes(item.path);
+    }
     if (user?.role === "user") {
-      return !["/users", "/admins", "/login", "/contact"].includes(item.path);
+      return !["/users", "/admins", "/login", "/contact","/adduser"].includes(item.path);
     }
     return item.path !== "/login";
   });

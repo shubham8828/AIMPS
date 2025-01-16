@@ -46,6 +46,7 @@
 }
 
 .payment-search-bar-group{
+  width: 100%;
   min-height: 100px;
   display: flex;
   height: auto;
@@ -75,11 +76,12 @@
 
 
 .payment-table-container {
-  overflow-x: auto;
+  overflow-x: scroll;
   max-width: 100%;
 
-
-
+}
+.payment-table-container::-webkit-scrollbar{
+  display: none;
 }
 
 .payment-table {
@@ -111,11 +113,11 @@
   background: rgba(152, 152, 152, 0.404);
 
 }
-.payment-button-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  gap: 10px;
+.payment-btn{
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 

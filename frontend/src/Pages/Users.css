@@ -24,6 +24,7 @@
   }
   
   .users-search-bar-group{
+    width: 90%;
     height: 100px;
     display: flex;
     flex-direction: row;

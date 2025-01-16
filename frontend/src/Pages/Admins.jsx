@@ -42,7 +42,6 @@ const Admins = () => {
     if (!currUser || currUser.role !== "root") {
       toast.error("Contact to Root Admin", { position: "top-center" });
       navigate("/message");
-
       return;
     }
 
@@ -51,12 +50,9 @@ const Admins = () => {
       console.error("Admin data is missing or undefined");
       return;
     }
-
-    // Navigate to the edit page with the admin data
     navigate("/admin/edit", { state: admin });
   };
 
-  // Delete functionality
   const handleDelete = async (admin) => {
     if (!currUser || currUser.role !== "root") {
       if (admin.role === "root") {
@@ -76,15 +72,6 @@ const Admins = () => {
     console.log("Delete functionality not yet implemented.", index);
   };
 
-  // Navigate to the add admin page
-  const handleAddAdmin = () => {
-    if (!currUser || currUser.role !== "root") {
-      toast.error("Contact to Root Admin", { position: "top-center" });
-      navigate("/message");
-      return;
-    }
-    navigate("/admin/add"); // Redirect to /admin/add
-  };
   if (loading) {
     return <Spinner />;
   }
@@ -155,20 +142,6 @@ const Admins = () => {
             </tbody>
           </table>
         </div>
-        {currUser && currUser.role === "root" && (
-          <div
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              justifyContent: "center",
-              width: "100px",
-            }}
-          >
-            <button onClick={handleAddAdmin} className="addAdmin-btn">
-              Add Admin
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
