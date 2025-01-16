@@ -14,7 +14,7 @@ const Team = () => {
   const teamHead = {
     title: "Project Mentor",
     name: "Prof. Vandana Maurya",
-    email: "vandanamaurya@gmail.com",
+    email: "vm@gmail.com",
     profession: "Assistant Professor",
     experience: "5+ years",
   };

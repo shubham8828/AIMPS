@@ -1,13 +1,14 @@
 
 .team-container{
-  /* padding: 1.5rem; */
   background-color: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  margin:auto;
-  width:95%;
+  width:auto;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  margin:auto;
+  margin: 5px;
+
+
 }
 
 .projectCard {
@@ -16,7 +17,7 @@
     padding: 1opx;
     text-align: center;
     border-radius: 10px;
-    width: 95%;
+    width: auto;
     max-width: 800px;
 
   }
@@ -39,7 +40,7 @@
   
   .card {
     background-color: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     flex: 1 1 calc(33.33% - 20px);
@@ -156,8 +157,8 @@
   /* Media Queries for Extra Small Screens (415px) */
 @media (max-width: 415px) {
   .card {
-    flex: 1 1 100%; /* Make cards take full width */
     margin: 10px auto; /* Add spacing */
+    width: 50%;
   }
 
   .projectCard {

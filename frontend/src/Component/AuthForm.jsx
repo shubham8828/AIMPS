@@ -11,6 +11,7 @@ const AuthForm = ({ setToken }) => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and register forms
   const [formData, setFormData] = useState({
     name: "",
+    shopname: "",
     email: "",
     phone: "",
     password: "",
@@ -23,7 +24,6 @@ const AuthForm = ({ setToken }) => {
       pin: "",
     },
     role: "user",
-    // Address fields split into parts
   });
   const navigate = useNavigate();
   const imageRef = useRef(); // useRef for image input
@@ -162,7 +162,7 @@ const AuthForm = ({ setToken }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="name">Shop/Company Name</label>
+                  <label htmlFor="shopname">Shop/Company Name</label>
                   <input
                     type="text"
                     name="shopname"

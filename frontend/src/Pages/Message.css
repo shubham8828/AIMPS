@@ -212,6 +212,10 @@
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
+  .message-input input{
+    width: 250px;
+
+  }
   .chat-container {
     flex-direction: column;
     padding: 10px;

@@ -72,40 +72,45 @@ const Message = () => {
   const handleUserClick = (userId) => {
     setSelectedUser(userId);
   };
-
   const handleSendMessage = () => {
-    if (newMessage.trim() === "" || !currUser) return;
-
+    if (newMessage.trim() === "" || !currUser || !selectedUser) {
+      // Ensure message is not empty and user is selected
+      return;
+    }
+  
     const newMessageObject = {
       sender: currUser.email,
       msg: newMessage,
       createdAt: Date.now(),
     };
-
+  
     setMessages((prevMessages) => [...prevMessages, newMessageObject]);
     setNewMessage("");
-
-    const collectedData = {
-      sender: currUser.email,
-      receiver: users.find((user) => user._id === selectedUser)?.email,
-      message: [newMessageObject],
-    };
-
-    if (!collectedData.receiver) {
+  
+    const receiverEmail = users.find((user) => user._id === selectedUser)?.email;
+  
+    if (!receiverEmail) {
       console.error("Receiver email not found for sending message.");
       return;
     }
-
+  
+    const collectedData = {
+      sender: currUser.email,
+      receiver: receiverEmail,
+      message: [newMessageObject], // Wrap message in an array
+    };
+  
     axios
       .post("http://localhost:4000/api/newmessage", collectedData, { headers })
       .then((response) => {
-        //
+        console.log("Message sent:", response.data);
+        // Optionally update state if needed with the saved message
       })
       .catch((error) => {
         console.error("Error sending message:", error.message);
       });
   };
-
+    
   if(loading){
     return <Spinner />
   }

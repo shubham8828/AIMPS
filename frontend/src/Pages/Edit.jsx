@@ -122,6 +122,7 @@ const Profile = () => {
                 required
                 style={{textTransform:'lowercase'}}
                 readOnly
+
               />
             </div>
             <div className="form-group">
@@ -214,9 +215,7 @@ const Profile = () => {
             </div>
           </>
         )}
-        <button type="submit" className="submit-btn">
-          {loading && <ImSpinner3 />} Update Profile
-        </button>
+        <button type="submit" className="submit-btn">Update Profile</button>
       </form>
     </div>
   );
