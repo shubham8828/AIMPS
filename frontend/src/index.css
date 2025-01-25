@@ -10,7 +10,7 @@ body{
 }
 
 .main-container{
-  background: #f19292;
+  background:rgba(255, 255, 255, 0.2);
   min-height: 100vh;
   height: 100%;
   width: 100%;
@@ -23,9 +23,11 @@ body{
   background: transparent;
   cursor: pointer;
   position: fixed;
-  bottom: 50vh;
-  right: 1vw;
+  top:80%;
+  right: 1%;
 }
+
+
 
 
  

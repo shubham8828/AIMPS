@@ -384,12 +384,13 @@ const AddAdmin = () => {
               autoComplete="postal-code" // Suggest browser autocomplete for postal codes
             />
           </div>
-        </form>
-        <div className="form-group">
+          <div className="form-group" style={{display:'flex',flexDirection:'column', alignItems:'center'}}>
           <button type="submit" className="addAdmin">
             Add User
           </button>
         </div>
+        </form>
+        
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .pie-chart-container{
     padding: .5rem;
-    background-color: #f8f8f8;
+    background-color: transparent;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     margin-top: 10px;

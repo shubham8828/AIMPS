@@ -1,10 +1,10 @@
 
 /* Container Styles */
 .new-invoice-container {
-    width: 90vw;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #ffffff69;
     border-radius: 12px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }

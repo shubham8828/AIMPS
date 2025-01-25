@@ -146,7 +146,7 @@ const AuthForm = ({ setToken }) => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
         <div className="auth-container">
           <div className="form-toggle">
             <button

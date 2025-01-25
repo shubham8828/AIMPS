@@ -11,74 +11,112 @@ const NewInvoices = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [discount, setDiscount] = useState(0);
+  const [gst, setGst] = useState(0);
   const [productList, setProductList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const email = localStorage.getItem("email");
 
   const addProduct = () => {
-    // Validate if all product details are correctly filled
-    if (!name || !price || !quantity || price <= 0 || quantity <= 0) {
-      toast.error("Please fill out the product details correctly.", { position: "top-center" });
+    // Validate product fields
+    if (!name.trim()) {
+      toast.error("Product name cannot be empty.", { position: "top-center" });
       return;
     }
-
-    const totalPrice = price * quantity;
-    const newProduct = { id: productList.length + 1, name, price, quantity, totalPrice };
+  
+    if (!price || price <= 0) {
+      toast.error("Price must be a positive number.", { position: "top-center" });
+      return;
+    }
+  
+    if (!quantity || quantity <= 0) {
+      toast.error("Quantity must be a positive number.", { position: "top-center" });
+      return;
+    }
+  
+    if (discount < 0) {
+      toast.error("Discount cannot be negative.", { position: "top-center" });
+      return;
+    }
+  
+    if (gst < 0) {
+      toast.error("GST cannot be negative.", { position: "top-center" });
+      return;
+    }
+  
+    // Calculate discount and GST
+    const discountedPrice = price - (price * (discount / 100));
+    const gstAmount = discountedPrice * (gst / 100);
+    const totalPrice = (discountedPrice + gstAmount) * quantity;
+  
+    const newProduct = {
+      id: productList.length + 1,
+      name,
+      price,
+      quantity,
+      discount,
+      gst,
+      totalPrice,
+    };
+  
     const updatedProductList = [...productList, newProduct];
-
     setProductList(updatedProductList);
-
-    // Update total
+  
+    // Update the total invoice amount
     const newTotal = updatedProductList.reduce((acc, item) => acc + item.totalPrice, 0);
     setTotal(newTotal);
-
-    // Clear the input fields
+  
+    // Clear product input fields
     setName("");
     setPrice("");
     setQuantity(1);
+    setDiscount(0);
+    setGst(0);
   };
-
+  
   const handleSaveData = async () => {
     // Validate required fields
-    if (!to || !phone || !address) {
-      toast.error("Please fill out all required fields", { position: "top-center" });
+    if (!to.trim()) {
+      toast.error("Recipient name cannot be empty.", { position: "top-center" });
       return;
     }
-
-    // Validate phone number (10 digits)
-    if (!/^\d{10}$/.test(phone)) {
-      toast.error("Please enter a valid phone number with exactly 10 digits.", { position: "top-center" });
+  
+    if (!phone || phone.trim().length !== 10) {
+      toast.error("Please enter a valid 10-digit phone number.", { position: "top-center" });
       return;
     }
-
+  
+    if (!address.trim()) {
+      toast.error("Address cannot be empty.", { position: "top-center" });
+      return;
+    }
+  
     // Check if at least one product is added
     if (productList.length === 0) {
       toast.error("Please add at least one product to the invoice.", { position: "top-center" });
       return;
     }
-
+  
     const formData = {
       to,
       phone,
       address,
       products: productList,
       total,
-      email // Add email to the form data
     };
-
+  
     try {
-      const token=localStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const headers = {
         'Authorization': `Bearer ${token}`
       };
-      setLoading(true)
-      const response = await axios.post('http://localhost:4000/api/create', formData,{headers});
+      setLoading(true);
+      const response = await axios.post('http://localhost:4000/api/create', formData, { headers });
       toast.success(response.data.msg, { position: 'top-center' });
-      console.log(response.data);
+  
       // Clear the form after successful submission
       setTo("");
       setPhone("");
@@ -86,28 +124,31 @@ const NewInvoices = () => {
       setProductList([]);
       setTotal(0);
       setName("");
-      setPrice("");
+      setPrice(0);
       setQuantity(1);
-      setLoading(false)
-      navigate("/payments", { state: response.data.invoice  });
+      setDiscount(0);
+      setGst(0);
+      setLoading(false);
+  
+      navigate("/payments", { state: response.data.invoice });
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       toast.error("There was an error saving the invoice.", { position: "top-center" });
     }
   };
-
-  // Handler to update customer details from search results
+  
   const handleSelectCustomer = (customer) => {
     setTo(customer.to);
     setPhone(customer.phone);
     setAddress(customer.address);
   };
-  if(loading){
-    return <Spinner/>
+
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
-    <>
+    <div className="main-container">
       <Search onSelectCustomer={handleSelectCustomer} />
 
       <div className="new-invoice-container">
@@ -117,7 +158,7 @@ const NewInvoices = () => {
             Save Data
           </button>
         </div>
-    
+
         <form className="new-invoice-form">
           <div className="first-row">
             <input
@@ -132,7 +173,7 @@ const NewInvoices = () => {
               onChange={(e) => {
                 const inputValue = e.target.value;
                 if (/^\d{0,10}$/.test(inputValue)) {
-                  setPhone(inputValue); // Update state with valid input
+                  setPhone(inputValue);
                 }
               }}
               value={phone}
@@ -148,12 +189,13 @@ const NewInvoices = () => {
               required
             />
           </div>
-    
+
           <div className="first-row">
             <input
               placeholder="Product Name"
               onChange={(e) => setName(e.target.value)}
               value={name}
+              title="Product Name"
               required
             />
             <input
@@ -163,6 +205,7 @@ const NewInvoices = () => {
               value={price}
               required
               min="0"
+              title="Price"
             />
             <input
               type="number"
@@ -171,14 +214,38 @@ const NewInvoices = () => {
               value={quantity}
               required
               min="1"
+              title="Quantity"
+
             />
           </div>
-    
+          <div className="first-row">
+            <input
+              placeholder="Discount (%)"
+              type="number"
+              onChange={(e) => setDiscount(parseFloat(e.target.value))}
+              value={discount}
+              required
+              title="Discount (%)"
+
+              min="0"
+            />
+            <input
+              type="number"
+              placeholder="GST (%)"
+              onChange={(e) => setGst(parseFloat(e.target.value))}
+              value={gst}
+              required
+              title="GST (%)"
+
+              min="0"
+            />
+          </div>
+
           <button type="button" onClick={addProduct} className="add-btn">
             Add Product
           </button>
         </form>
-    
+
         {productList.length > 0 && (
           <div className="product-wrapper">
             <div className="product-list">
@@ -186,26 +253,30 @@ const NewInvoices = () => {
               <p>Product Name</p>
               <p>Price</p>
               <p>Quantity</p>
+              <p>Discount (%)</p>
+              <p>GST (%)</p>
               <p>Total Price</p>
             </div>
-    
+
             {productList.map((product, index) => (
               <div key={index} className="product-list">
                 <p>{index + 1}</p>
                 <p>{product.name}</p>
                 <p>{product.price}</p>
                 <p>{product.quantity}</p>
-                <p>{product.totalPrice}</p>
+                <p>{product.discount}</p>
+                <p>{product.gst}</p>
+                <p>{product.totalPrice.toFixed(2)}</p>
               </div>
             ))}
-    
+
             <div className="total-wrapper">
-              <p>Total: Rs. {total}</p>
+              <p>Total: Rs. {total.toFixed(2)}</p>
             </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

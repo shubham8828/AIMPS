@@ -1,7 +1,7 @@
 
 .chart-container {
     width: 100%;
-    background: white;
+    background: rgba(255, 255, 255, 0.900);
     margin-top: 15px;
     padding: 20px;
     border-radius: 10px;
@@ -9,9 +9,9 @@
   }
   
   .chart-title {
-    text-align: center;
+    text-align: center;   
     font-size:1.1rem;
-    color: #444;
+    color: black;
     margin-bottom: 20px;
   }
   
@@ -29,7 +29,6 @@
     min-width: 250px; /* Ensure charts have a minimum width */
     height: auto;
     padding: 20px;
-    background: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
@@ -38,7 +37,7 @@
     text-align: center;
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: #333;
+    color:black;
   }
   
   /* Responsive Design */

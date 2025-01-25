@@ -1,6 +1,6 @@
 .payment-list-container {
   padding:2px;
-  background-color: #f8f8f8;
+  background-color: #f8f8f851;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   width:95%;
@@ -103,7 +103,7 @@
   color: white;
 }
 .payment-table tr{
-  background:white ;
+  background:rgba(255, 255, 255, 0.425) ;
   cursor: pointer;
   border: 1px solid black;
 

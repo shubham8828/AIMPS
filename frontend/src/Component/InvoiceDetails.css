@@ -1,24 +1,29 @@
 
 .invoice-container {
-    width: 70%;
-    min-height: 90%;
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    border: 1px solid black;
-    margin: 20px auto;
-    box-sizing: border-box;
+  padding:10px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width:900px;
+  box-sizing: border-box;
+  max-width: max-content;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 5px;
   }
   
-  .header-conatainer {
+  .header-container {
+    width: 800px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-around;
     padding: 20px;
     gap: 15px;
   }
   
-  .header-conatainer img {
+  .Company-logo {
     width: 80px;
     height: 80px;
   }
@@ -130,12 +135,10 @@
     text-transform: capitalize;
   }
   
-  /* Actions Button Styles */
   .actions-container {
     margin-top: 30px;
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
   }
   
@@ -168,82 +171,5 @@
   .no-border {
     border: none !important;
     box-shadow: none !important;
-  }
-  
-  /* Responsive Breakpoints */
-  
-  /* Screen size up to 400px */
-  @media screen and (max-width: 400px) {
-    .invoice-container {
-      width: 90%;
-      padding: 10px;
-    }
-  
-    .header-conatainer {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .user-detail-container {
-      font-size: 12px;
-    }
-  
-    th,
-    td {
-      font-size: 12px;
-    }
-  
-    button {
-      font-size: 12px;
-      padding: 8px 10px;
-    }
-  }
-  
-  /* Screen size up to 600px */
-  @media screen and (max-width: 600px) {
-    .main-detail-container {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .product-table {
-      width: 100%;
-    }
-  
-    button {
-      font-size: 14px;
-    }
-  }
-  
-  /* Screen size up to 800px */
-  @media screen and (max-width: 800px) {
-    .header-conatainer img {
-      width: 70px;
-      height: 70px;
-    }
-  
-    .userName {
-      font-size: 20px;
-    }
-  
-    .product-table th,
-    .product-table td {
-      font-size: 13px;
-    }
-  }
-  
-  /* Screen size up to 1024px */
-  @media screen and (max-width: 1024px) {
-    .invoice-container {
-      width: 80%;
-    }
-  
-    .header-conatainer {
-      gap: 10px;
-    }
-  
-    button {
-      padding: 10px 15px;
-    }
   }
   

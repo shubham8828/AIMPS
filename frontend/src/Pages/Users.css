@@ -1,7 +1,7 @@
 
   .user-container {
     padding:2px;
-    background-color: #f8f8f8;
+    background-color: #ffffff7d;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     width:95%;
@@ -84,7 +84,6 @@
     color: white;
   }
   .users-table tr{
-    background:white ;
     cursor: pointer;
     border: 1px solid black;
 

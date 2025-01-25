@@ -118,7 +118,7 @@ const Message = () => {
   return (
     <div className="chat-container">
       <div className="user-list-container">
-        <h3>AIMS</h3>
+        <h3>AIMPS</h3>
 
         {/* Toggle Buttons */}
         <div className="btn-group">

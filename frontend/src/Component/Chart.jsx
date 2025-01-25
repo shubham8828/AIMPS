@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Line,Pie } from "react-chartjs-2";
+import { Line, Pie } from "react-chartjs-2";
 import {
   BarChart,
   Bar,
@@ -23,7 +23,7 @@ import {
   Legend as ChartJSLegend,
 } from "chart.js";
 
-import './Chart.css'
+import "./Chart.css";
 
 // Register Chart.js components
 ChartJS.register(
@@ -91,7 +91,7 @@ const calculateMonthlyData = (invoices) => {
 const LineChart = ({ data }) => {
   const months = data.map((item) => item.month);
   const invoiceCounts = data.map((item) => item.invoiceCount);
-  const totalPrices = data.map((item) => item.totalPrice); // Use totalPrice instead of price
+  const totalPrices = data.map((item) => item.totalPrice);
 
   const chartConfig = {
     labels: months,
@@ -106,7 +106,7 @@ const LineChart = ({ data }) => {
       },
       {
         label: "Total Price (₹)",
-        data: totalPrices, // Correct dataset key
+        data: totalPrices,
         borderColor: "green",
         backgroundColor: "rgba(0, 128, 0, 0.1)",
         fill: true,
@@ -118,7 +118,12 @@ const LineChart = ({ data }) => {
   const options = {
     responsive: true,
     plugins: {
-      legend: { position: "top" },
+      legend: {
+        position: "top",
+        labels: {
+          color: "black", // Legend text color
+        },
+      },
       tooltip: {
         mode: "index",
         intersect: false,
@@ -136,12 +141,26 @@ const LineChart = ({ data }) => {
         },
       },
     },
-    scales: { y: { beginAtZero: true } },
+    scales: {
+      x: {
+        ticks: {
+          color: "white", // X-axis text color
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: "white", // Y-axis text color
+        },
+      },
+    },
   };
 
   return (
-    <div className="pie-chart-container" style={{background:'white', marginTop:'15px'}}>
-      <h2 style={{ textAlign: "center" }} className="chart-title">Monthly Invoice and Price Summary</h2>
+    <div className="pie-chart-container" style={{ marginTop: "15px" }}>
+      <h2 style={{ textAlign: "center" }} className="chart-title">
+        Monthly Invoice and Price Summary
+      </h2>
       <Line data={chartConfig} options={options} />
     </div>
   );
@@ -150,7 +169,7 @@ const LineChart = ({ data }) => {
 // Grouped Bar Chart Component
 const GroupedBarChart = ({ chartData }) => {
   return (
-    <div className="pie-chart-container" style={{background:'white', marginTop:'15px'}}>
+    <div className="pie-chart-container" style={{ marginTop: "15px" }}>
       <h3 style={{ textAlign: "center" }} className="chart-title">
         Month-Wise Invoice Count and Total Price
       </h3>
@@ -159,18 +178,31 @@ const GroupedBarChart = ({ chartData }) => {
           data={chartData}
           margin={{ top: 5, right: 25, left: 25, bottom: 5 }}
         >
-          <XAxis dataKey="month" />
-          <YAxis />
+          {/* Customize X-Axis */}
+          <XAxis
+            dataKey="month"
+            tick={{ fill: "white" }} // Set X-Axis tick color to white
+          />
+          {/* Customize Y-Axis */}
+          <YAxis
+            tick={{ fill: "white" }} // Set Y-Axis tick color to white
+          />
+          {/* Customize Tooltip */}
           <Tooltip
+            contentStyle={{ backgroundColor: "#fff",borderRadius:'10px'}} // Tooltip background and text color
             formatter={(value, name) => {
               if (name === "Invoice Count") return [`${value} invoices`, name];
               if (name === "Total Price") return [`₹${value}`, name];
               return [value, name];
             }}
           />
-          <Legend />
-          <Bar dataKey="invoiceCount" fill="#8884d8" name="Invoice Count" />
-          <Bar dataKey="totalPrice" fill="#82ca9d" name="Total Price" />
+          {/* Customize Legend */}
+          <Legend
+            wrapperStyle={{ color: "white" }} // Set legend text color to white
+          />
+          {/* Bars */}
+          <Bar dataKey="invoiceCount" fill="green" name="Invoice Count" />
+          <Bar dataKey="totalPrice" fill="blue" name="Total Price" />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -228,7 +260,9 @@ const PieChart = ({ data }) => {
 
   return (
     <div className="pie-chart-container ">
-      <h2 style={{ textAlign: 'center' }} className="chart-title">Monthly Invoice Analysis</h2>
+      <h2 style={{ textAlign: "center" }} className="chart-title">
+        Monthly Invoice Analysis
+      </h2>
       <div className="chart-wrapper">
         <div className="chart-box">
           <h3>Total Price Distribution (Month-wise)</h3>
@@ -241,7 +275,6 @@ const PieChart = ({ data }) => {
       </div>
     </div>
   );
-  
 };
 
 // Parent Component
@@ -269,10 +302,10 @@ const Charts = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="Container" style={{background:'white', marginTop:'15px'}}>
-        <LineChart data={data} />
-        <GroupedBarChart chartData={data} />
-        <PieChart data={data} />
+    <div className="Container" style={{ marginTop: "15px" }}>
+      <LineChart data={data} />
+      <GroupedBarChart chartData={data} />
+      <PieChart data={data} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 .about-container {
   padding: 1rem;
-  background-color: #f8f8f8;
+  background-color: #ffffff7d;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   margin:5px;
@@ -11,14 +11,14 @@
 
 .about-container h2 {
   font-size: 1.4rem;
-  color: #333333;
+  color: black;
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .about-container p {
   font-size: 1rem;
-  color: #555555;
+  color:black;
   line-height: 1.7;
 }
 
@@ -29,7 +29,7 @@
 
 .about-container ul li {
   margin: 0.4rem 0;
-  color: #444444;
+  color: black;
 }
 
 @media (max-width: 768px) {

@@ -5,6 +5,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import Spinner from "../Component/Spinner";
+import { FaCloudDownloadAlt } from "react-icons/fa";
 
 import "./PaymentList.css";
 const PaymentList = () => {
@@ -27,10 +28,8 @@ const PaymentList = () => {
     const fetchPaymentData = async () => {
       setLoading(true);
       try {
-        const response = await axios.post(
-          "http://localhost:4000/api/payment-data",
-          {},
-          { headers }
+        const response = await axios.get(
+          "http://localhost:4000/api/payment-data",{ headers }
         );
         const fetchedData = response.data.data || [];
         setPaymentData(fetchedData); // Set full payment data
@@ -152,9 +151,6 @@ const PaymentList = () => {
               <option value="Pending">Pending</option>
               <option value="Successful">Successful</option>
             </select>
-            {/* <button className="report-download-btn" onClick={downloadTableData}>
-            <img src={Download} className="report-download-btn-icon" />
-          </button> */}
           </div>
         </div>
 
@@ -259,6 +255,8 @@ const PaymentList = () => {
             </button>
           </div>
         )}
+            <button className="download-btn" title="click to download invoice data"  onClick={downloadTableData}> <FaCloudDownloadAlt /></button>
+
       </div>
     </div>
   );

@@ -24,19 +24,33 @@ const generateInvoiceId = () => {
 const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: [0, "Price must be a non-negative number"]
   },
   quantity: {
     type: Number,
-    required: true
+    required: true,
+    min: [1, "Quantity must be at least 1"]
+  },
+  discount: {
+    type: Number,
+    default: 0, // Default to 0 if no discount is provided
+    min: [0, "Discount must be a non-negative number"]
+  },
+  gst: {
+    type: Number,
+    default: 0, // Default to 0 if no GST is provided
+    min: [0, "GST must be a non-negative number"]
   },
   totalPrice: {
     type: Number,
-    required: true
+    required: true,
+    min: [0, "Total price must be a non-negative number"]
   }
 });
 

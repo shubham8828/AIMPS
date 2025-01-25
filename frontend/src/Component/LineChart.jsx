@@ -70,6 +70,7 @@ const LineChart = () => {
     plugins: {
       legend: {
         position: 'top',
+
       },
       tooltip: {
         callbacks: {
@@ -82,16 +83,24 @@ const LineChart = () => {
         title: {
           display: true,
           text: 'Month',
+          color:'white'
+
+        },
+        ticks: {
+          color: "white", // Y-axis text color
         },
       },
       y: {
         title: {
           display: true,
           text: 'Number of Users',
+          color:'white'
         },
+        
         beginAtZero: true,
         ticks: {
-          stepSize: 28,
+          stepSize: 5,
+          color:'white'
         },
       },
     },

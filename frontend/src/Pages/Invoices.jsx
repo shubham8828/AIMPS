@@ -114,6 +114,8 @@ const Invoices = () => {
         "Product Name": product.name || "N/A",
         Price: product.price || 0,
         Quantity: product.quantity || 0,
+        Discount:product.discount||0,
+        "GST (%) ":product.gst||0,
         "Total Price": product.totalPrice || 0,
       }))
     );
@@ -187,7 +189,7 @@ const Invoices = () => {
                         <td>Rs.{data.total}</td>
                         <td style={{textTransform:'capitalize'}}>{data.address}</td>
                         <td>{data.phone}</td>
-                        <td>
+                        <td style={{display:'flex'}}>
                           <button
                             className="invoice-delete-btn"
                             onClick={() => deleteInvoice(data._id)}
@@ -196,7 +198,7 @@ const Invoices = () => {
                           </button>
                           <button
                             onClick={() =>
-                              navigate("/invoice-details", { state: data })
+                              navigate("/invoice-details", { state:data })
                             }
                             className="invoice-edit-btn"
                           >

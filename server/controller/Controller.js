@@ -731,19 +731,21 @@ export const getUserPayments = async (req, res) => {
 // ------------------ Find Invoice By Invoice ID ----------------
 export const getInvoice = async (req, res) => {
   try {
-    const { invoiceId } = req.body; // Extract invoiceId from the request body
+    const { invoiceId } = req.body; 
 
     if (!invoiceId) {
       return res.status(400).json({ message: "Invoice ID is required" });
     }
 
-    const invoice = await Invoice.findOne({ invoiceId: invoiceId });
+    const invoice = await Invoice.findOne({invoiceId });
+    const user=await User.findOne({email:invoice.email})
+    const payment=await Payment.findOne({invoiceId:invoice.invoiceId})
 
     if (!invoice) {
       return res.status(404).json({ message: "Invoice not found" });
     }
 
-    return res.status(200).json({ invoice });
+    return res.status(200).json({ invoice,user,payment });
   } catch (error) {
 
     return res.status(500).json({
@@ -783,7 +785,6 @@ export const getPaymentData = async (req, res) => {
     });
   }
 };
-
 
 
 // --------------------------- Get all messages of one conversation---------------------

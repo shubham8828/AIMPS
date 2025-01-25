@@ -116,8 +116,8 @@ const EditUser = () => {
 
   return (
     <div className="profile-container">
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Admin Profile
+      <h2 style={{ textAlign: "center", marginBottom: "20px",textTransform:'capitalize' }}>
+        {formData.role +" "}Profile
       </h2>
       <form className="profile-form" onSubmit={handleSubmit}>
         <div className="form-group">

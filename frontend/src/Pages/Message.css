@@ -8,7 +8,7 @@
 
 .user-list-container {
   width: 250px;
-  background-color: #ffffff;
+  background-color: #ffffff7d;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
@@ -58,7 +58,7 @@
   flex: 1;
   margin-left: 20px;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: #ffffff7d;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;

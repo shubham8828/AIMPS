@@ -1,21 +1,26 @@
-
-/* General Styles for the Payment Page */
-.payment-page1 {
-    width: auto;
-  }
-  
+.payment-page{
+  background-color: #ffffff7d;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width: auto;
+  box-sizing: border-box;
+  margin: 5px;
+  max-width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} 
   .payment-container,
   .payment-success {
     border-radius: 8px;
-    padding: 20px;
-    margin: 20px;
-    margin: auto;
+    margin: 5px;
   }
   
   .payment-container {
     flex-direction: column;
-    width: 50vw;
-    margin: 20px;
+    width: 90%;
+    margin: 5px;
   }
   
   h1 {

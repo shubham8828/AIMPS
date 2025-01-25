@@ -14,7 +14,6 @@ import {
   newMessages,
   getUserPayments,
   getInvoice,
-  getPaymentData,
   getMessages,
   getUsers,
   deleteUser,
@@ -32,8 +31,6 @@ Routes.use(AuthenticateToken);
 
 Routes.get('/user', getUser);
 Routes.delete('/deleteuser/:id', deleteUser);
-
-
 Routes.post('/create', newInvoive);
 Routes.get('/invoices', invoices);
 Routes.delete('/delete/:id', deleteInvoice);
@@ -41,12 +38,10 @@ Routes.post('/search', searchCustomer); // for searching customers
 Routes.put('/update', update); // update user profile
 Routes.put('/updateInvoice', updateInvoice); // updating invoice
 Routes.post('/payment', makePayment);
-Routes.post('/payment-data', getUserPayments);
+Routes.get('/payment-data', getUserPayments);
 Routes.post('/getInvoice', getInvoice);
-Routes.post('/getPaymentData', getPaymentData);
 Routes.get('/users', getUsers);
 Routes.post('/messages', getMessages);
 Routes.post('/newmessage', newMessages);
-
 
 export default Routes;

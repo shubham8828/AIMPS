@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PaymentSpinner from "../Component/Spinner.jsx";
 import axios from "axios";
-import './Payment.css'
+import "./Payment.css";
+
 const generateRandomPaymentId = () => {
   const randomPart = Math.floor(Math.random() * 100000000);
   return `PAY${randomPart}`;
@@ -12,10 +13,7 @@ const generateRandomPaymentId = () => {
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Destructure the data from location state
-  const data = location.state || {}; // Fallback if location.state is undefined
-  console.log(data);
+  const [data, setData] = useState(location.state || {});
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
     expiry: "",
@@ -127,14 +125,15 @@ const Payment = () => {
       setPaymentData(transactionData);
 
       try {
-        const token=localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const headers = {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         };
         // Sending payment data to the backend using axios
         const response = await axios.post(
           "http://localhost:4000/api/payment",
-          { transactionData },{headers}
+          { transactionData },
+          { headers }
         );
         console.log("Payment data sent to server:", response.data);
 
@@ -150,218 +149,225 @@ const Payment = () => {
   };
 
   return (
-    <div className="payment-page1">
-      {paymentSuccess ? (
-        <div className="payment-success">
-          <h1>Payment Successful!</h1>
-          <p>Thank you for your payment, {data.to}!</p>
-          <p>
-            <b>Invoice ID:</b> {data.invoiceId}
-          </p>
-          <p>
-            <b>Total Paid:</b> ₹{data.total.toFixed(2)}
-          </p>
-          <p>We appreciate your business.</p>
-          {paymentData && (
-            <div className="payment-data">
-              <h3>Transaction Details:</h3>
-              <ul
-                style={{ textAlign: "left", listStyleType: "none", padding: 0 }}
-              >
-                {Object.entries(paymentData).map(([key, value]) => {
-                  // Check if the value is an object (e.g., cardDetails)
-                  if (typeof value === "object") {
+    <div className="main-container" style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+      <div className="payment-page">
+        {paymentSuccess ? (
+          <div className="payment-success">
+            <h1>Payment Successful!</h1>
+            <p>Thank you for your payment, {data.to}!</p>
+            <p>
+              <b>Invoice ID:</b> {data.invoiceId}
+            </p>
+            <p>
+              <b>Total Paid:</b> ₹{data.total}
+            </p>
+            <p>We appreciate your business.</p>
+            {paymentData && (
+              <div className="payment-data">
+                <h3>Transaction Details:</h3>
+                <ul
+                  style={{
+                    textAlign: "left",
+                    listStyleType: "none",
+                    padding: 0,
+                  }}
+                >
+                  {Object.entries(paymentData).map(([key, value]) => {
+                    // Check if the value is an object (e.g., cardDetails)
+                    if (typeof value === "object") {
+                      return (
+                        <li key={key} style={{ marginBottom: "10px" }}>
+                          <strong style={{ textTransform: "capitalize" }}>
+                            {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
+                          </strong>
+                          <ul style={{ paddingLeft: "20px" }}>
+                            {Object.entries(value).map(([subKey, subValue]) => (
+                              <li key={subKey}>
+                                <strong>
+                                  {subKey
+                                    .replace(/([A-Z])/g, " $1")
+                                    .toUpperCase()}
+                                  :
+                                </strong>{" "}
+                                {subValue}
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      );
+                    }
+
                     return (
                       <li key={key} style={{ marginBottom: "10px" }}>
                         <strong style={{ textTransform: "capitalize" }}>
                           {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
-                        </strong>
-                        <ul style={{ paddingLeft: "20px" }}>
-                          {Object.entries(value).map(([subKey, subValue]) => (
-                            <li key={subKey}>
-                              <strong>
-                                {subKey
-                                  .replace(/([A-Z])/g, " $1")
-                                  .toUpperCase()}
-                                :
-                              </strong>{" "}
-                              {subValue}
-                            </li>
-                          ))}
-                        </ul>
+                        </strong>{" "}
+                        {value}
                       </li>
                     );
-                  }
+                  })}
+                </ul>
 
-                  return (
-                    <li key={key} style={{ marginBottom: "10px" }}>
-                      <strong style={{ textTransform: "capitalize" }}>
-                        {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
-                      </strong>{" "}
-                      {value}
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <button
-                style={{
-                  marginTop: "20px",
-                  padding: "10px 20px",
-                  backgroundColor: "#3498db",
-                  border: "none",
-                  color: "white",
-                  borderRadius: "5px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-                onClick={() => navigate("/dashboard")}
-              >
-                Done
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="payment-container">
-          <h1>Payment Details</h1>
-          <div className="invoice-summary">
-            <h2>Invoice Summary</h2>
-            <p>
-              <b>Invoice No.:</b> {data.invoiceId}
-            </p>
-            <p>
-              <b>Customer Name:</b> {data.to}
-            </p>
-            <p>
-              <b>Total Amount:</b> ₹{data.total.toFixed(2)}
-            </p>
-            <p>
-              <b>Phone:</b> {data.phone}
-            </p>
-            <p>
-              <b>Address:</b> {data.address}
-            </p>
-            <p>
-              <b>Email:</b> {data.email}
-            </p>
-
-            <h3>Product Details</h3>
-            {data.products.length > 0 ? (
-              <ul>
-                {data.products.map((product, index) => (
-                  <li key={product._id}>
-                    <b>{product.name}</b> - ₹{product.price} x{" "}
-                    {product.quantity} = ₹{product.totalPrice}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No products found.</p>
+                <button
+                  style={{
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    backgroundColor: "#3498db",
+                    border: "none",
+                    color: "white",
+                    borderRadius: "5px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease",
+                  }}
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Done
+                </button>
+              </div>
             )}
           </div>
+        ) : (
+          <div className="payment-container">
+            <h1>Payment Details</h1>
+            <div className="invoice-summary">
+              <h2>Invoice Summary</h2>
+              <p>
+                <b>Invoice No.:</b> {data.invoiceId}
+              </p>
+              <p>
+                <b>Customer Name:</b> {data.to}
+              </p>
+              <p>
+                <b>Total Amount:</b> ₹{data.total}
+              </p>
+              <p>
+                <b>Phone:</b> {data.phone}
+              </p>
+              <p>
+                <b>Address:</b> {data.address}
+              </p>
+              <p>
+                <b>Email:</b> {data.email}
+              </p>
 
-                 <div className="payment-form">
-            <h2>Enter Payment Details</h2>
+              <h3>Product Details</h3>
+              {data.products.length > 0 ? (
+                <ul>
+                  {data.products.map((product, index) => (
+                    <li key={product._id}>
+                      <b>{product.name}</b> - ₹{product.price} x{" "}
+                      {product.quantity} = ₹{product.totalPrice}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No products found.</p>
+              )}
+            </div>
 
-            <label>
-              Payment Method
-              <select
-                name="paymentMethod"
-                value={paymentDetails.paymentMethod}
-                onChange={handleChange}
-              >
-                <option value="">Select Payment Method</option>
-                <option value="Cash">Cash</option>
-                <option value="Card">Card</option>
-              </select>
-            </label>
+            <div className="payment-form">
+              <h2>Enter Payment Details</h2>
 
-            {paymentDetails.paymentMethod === "Card" && (
-              <>
-                <label>
-                  Card Number
-                  <input
-                    type="text"
-                    name="cardNumber"
-                    placeholder="Enter your card number"
-                    value={paymentDetails.cardNumber}
-                    onChange={handleChange}
-                    maxLength={16}
-                  />
-                </label>
-                <label>
-                  Expiry Date (MM/YY)
-                  <input
-                    type="text"
-                    name="expiry"
-                    placeholder="MM/YY"
-                    value={paymentDetails.expiry}
-                    onChange={(e) => {
-                      let value = e.target.value;
+              <label>
+                Payment Method
+                <select
+                  name="paymentMethod"
+                  value={paymentDetails.paymentMethod}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Payment Method</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                </select>
+              </label>
 
-                      if (value.length === 2 && !value.includes("/")) {
-                        value = `${value}/`; // Add semicolon here
-                      }
-                  
+              {paymentDetails.paymentMethod === "Card" && (
+                <>
+                  <label>
+                    Card Number
+                    <input
+                      type="text"
+                      name="cardNumber"
+                      placeholder="Enter your card number"
+                      value={paymentDetails.cardNumber}
+                      onChange={handleChange}
+                      maxLength={16}
+                    />
+                  </label>
+                  <label>
+                    Expiry Date (MM/YY)
+                    <input
+                      type="text"
+                      name="expiry"
+                      placeholder="MM/YY"
+                      value={paymentDetails.expiry}
+                      onChange={(e) => {
+                        let value = e.target.value;
 
-                      // Allow only digits and a slash for MM/YY format
-                      if (/^\d{0,2}\/?\d{0,2}$/.test(value)) {
-                        // Handle MM part (01-12) and YY part (00-99)
-                        if (value.length <= 5) {
-                          // If MM is less than 01 or greater than 12, show toast error
-                          const month = value.slice(0, 2);
-                          if (month.length === 2) {
-                            if (
-                              parseInt(month, 10) < 1 ||
-                              parseInt(month, 10) > 12
-                            ) {
-                              toast.error(
-                                "Enter a valid month number (01-12).",
-                                {
-                                  position: "top-center",
-                                }
-                              );
+                        if (value.length === 2 && !value.includes("/")) {
+                          value = `${value}/`; // Add semicolon here
+                        }
+
+                        // Allow only digits and a slash for MM/YY format
+                        if (/^\d{0,2}\/?\d{0,2}$/.test(value)) {
+                          // Handle MM part (01-12) and YY part (00-99)
+                          if (value.length <= 5) {
+                            // If MM is less than 01 or greater than 12, show toast error
+                            const month = value.slice(0, 2);
+                            if (month.length === 2) {
+                              if (
+                                parseInt(month, 10) < 1 ||
+                                parseInt(month, 10) > 12
+                              ) {
+                                toast.error(
+                                  "Enter a valid month number (01-12).",
+                                  {
+                                    position: "top-center",
+                                  }
+                                );
+                              } else {
+                                setPaymentDetails({
+                                  ...paymentDetails,
+                                  expiry: value,
+                                });
+                              }
                             } else {
                               setPaymentDetails({
                                 ...paymentDetails,
                                 expiry: value,
                               });
                             }
-                          } else {
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              expiry: value,
-                            });
                           }
                         }
-                      }
-                    }}
-                    maxLength={5} // Limit input to MM/YY format
-                  />
-                </label>
+                      }}
+                      maxLength={5} // Limit input to MM/YY format
+                    />
+                  </label>
 
-                <label>
-                  CVV
-                  <input
-                    type="password"
-                    name="cvv"
-                    placeholder="CVV"
-                    value={paymentDetails.cvv}
-                    onChange={handleChange}
-                    maxLength={3}
-                  />
-                </label>
-              </>
-            )}
+                  <label>
+                    CVV
+                    <input
+                      type="password"
+                      name="cvv"
+                      placeholder="CVV"
+                      value={paymentDetails.cvv}
+                      onChange={handleChange}
+                      maxLength={3}
+                    />
+                  </label>
+                </>
+              )}
 
-            <button onClick={handlePayment}>Pay ₹{data.total.toFixed(2)}</button>
+              <button onClick={handlePayment}>
+                Pay ₹{data.total.toFixed(2)}
+              </button>
 
-            {spinner && <PaymentSpinner />}
+              {spinner && <PaymentSpinner />}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

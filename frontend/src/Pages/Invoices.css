@@ -1,6 +1,6 @@
 .invoice-container{
   padding:2px;
-    background-color: #f8f8f8;
+    background-color: #ffffff7d;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     width:95%;
@@ -13,8 +13,6 @@
     margin: auto;
     margin-bottom: 10px;
     margin-top: 10px;
-  
-
 }
 
 .no-invoice-wrapper {
@@ -40,7 +38,6 @@
   .invoice-footer {
     margin-top: 20px;
     padding: 15px;
-    background-color: #f1f1f1;
     text-align: center;
     border-radius: 8px;
     color: #7f8c8d;
@@ -58,10 +55,11 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    gap: 10px;
     border-radius: 20px;
   } 
   .invoice-search-bar{
-    width: 300px;
+    width: 250px;
     padding: 10px 15px;
     font-size: 16px;
     border: 2px solid #ddd;
@@ -104,7 +102,7 @@
     color: white;
   }
   .invoice-table tr{
-    background:white ;
+    background:#ffffff7d ;
     cursor: pointer;
 
   }
